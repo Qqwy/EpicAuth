@@ -1,0 +1,22 @@
+* Voorbeeld:
+** Pietje wil betalen bij Bol.com
+*** Pietje zit bij de Rabobank
+*** de Rabobank heeft al eerder een gesigneerde verklaring naar Pietje gestuurd. (deze staat encrypted op Ethereum)
+*** Pietje wil afrekenen bij Bol.com
+*** Bol.com wil weten dat Pietje een bestaande bankrekening heeft.
+*** Bol.com stuurt verzoek aan Pietje om bankverklaring te delen.
+*** Pietje kan beslissen eerdere gesigneerde verklaring naar Bol.com te sturen.
+*** Bol.com kan nu verifieren of verklaring inderdaad door Rabobank ondertekend is.
+*** Bol.com kan daarnaast verifieren of Rabobank ondertussen niet in een publieke transactie publiekelijk (de hash van de) bankrekening van Pietje heeft geblokkeerd.
+
+
+* Algemene Transacties
+** Private verklaring die Alice aan Bob geeft
+*** En als backup versleutelt met Bob's public key op Ethereum zet?
+** Publieke transactie van Alice om verklaring met eerder uitgegeven ID gaande over Bob te blokkeren.
+** Private transactie die Alice maakt voor Bob waardoor Bob later met 'key' om later in één keer in te kunnen loggen zonder opnieuw te authenticaten bij Alice.
+*** Zowel rechtstreeks naar Bob gestuurd als gebackup't op Ethereum, zodat automatisch gedeeld wordt tussen systemen van Bob.
+*** Wordt natuurlijk alleen gemaakt door Alice wanneer Alice tevreden is met de verklaringen die Bob met Alice gedeeld heeft.
+
+* Problemen:
+** Hoe zowel veilig als gebruiksvriendelijk maken?
