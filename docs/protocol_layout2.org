@@ -1,0 +1,45 @@
+The EpicAuth protocol has two separate parts:
+
+1) Authentication
+2) Verification.
+
+As part of Authentication Sequences, a Service might ask for zero or more pieces of Verified information.
+
+
+* Authentication
+** Players:
+*** Client: A single identity of a user. User wants to authenticate with this identity at Service.
+**** Has a public/private key pair.
+*** Service: A service that has many users. Users can register/login iff they are able to authenticate here.
+**** Has a public/private key pair.
+ 1) User is on webpage of Service, and can choose to authenticate using EpicAuth.
+ 2) -> User clicks button.
+ 3) <- Service sends list of To Be Verefied Datasnippets(TBVDs) to be provided by user.
+ 4) Client-side software shows User what TBVDs are requested. User can decide between:
+    a) Cancel. Stops process here.
+    b) User can pick which identity they want to use. (Only ones that contain all required TBVDs are selectable)
+     b') After selecting Identity, for each datasnippet, which alternative could be used.
+ 5) -> User sends list of selected VDs to Service.
+ 6) Service checks if VDs are Valid.
+  a) Invalid. Returns failure response to User.
+  b) Valid. Continue
+ 7) Service creates Authentication Token.
+ 8) <- Service returns Authentication Token to Client.
+ 9) Client can decide where to store Authentication Token for future use.
+    - Locally
+    - In the Blockchain (so other devices that share same Identity(privkey) can now also see/use this authentication token.
+ 10) Client has been Authenticated Successfully.
+     
+* Data Types:
+** List of 'To Be Verified Datasnippets'(TBVDs):
+*** Each element of list is (unordered) set of alternatives.
+*** Each alternative is a {key, verified_id}, where `key` is some (conventionalized) string value, and `verifier_id` is a reference to the Service that should have verified it.
+*** A special alternative is called 'none', which is used in case of optional datasnippets.
+** Verified Datasnippets (VDs):
+*** Each Datasnippet is: {key, verifier_id, data, revocation_ref, verifier_signature}
+**** key: Key that matches TBVD key.
+**** data: string-data.
+**** verifier_id: ID of verifier (matches with TBVD verifier_id)
+**** revocation_ref: Reference (blockchain address) to location of Revocation Contract. Might be 'null' in case that `verifier` decided that was okay.
+**** verifier_signature: Cryptographic Signature of delimited concatenation of all of above fields.
+*** Validity can be verified by Service by checking if the status of the Revocation Contract is modified to be 'revoked'.
