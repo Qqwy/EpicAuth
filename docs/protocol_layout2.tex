@@ -1,0 +1,174 @@
+% Created 2017-02-11 Sat 00:49
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\author{W-M}
+\date{\today}
+\title{}
+\hypersetup{
+ pdfauthor={W-M},
+ pdftitle={},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 24.5.1 (Org mode 9.0.2)}, 
+ pdflang={English}}
+\begin{document}
+
+\tableofcontents
+
+The EpicAuth protocol has two separate parts:
+
+\begin{enumerate}
+\item Authentication
+\item Verification.
+\end{enumerate}
+
+As part of Authentication Sequences, a Service might ask for zero or more pieces of Verified information.
+
+
+\section{Authentication}
+\label{sec:org9f71c4c}
+\subsection{Players:}
+\label{sec:org28718c6}
+\subsubsection{User: A single identity of a user. User wants to authenticate with this identity at Service.}
+\label{sec:org69064d1}
+\begin{enumerate}
+\item Has a public/private key pair.
+\label{sec:org62c8df5}
+\end{enumerate}
+\subsubsection{Service: A service that has many users. Users can register/login iff they are able to authenticate here.}
+\label{sec:org230d7a7}
+\begin{enumerate}
+\item Has a public/private key pair.
+\label{sec:org4195690}
+\end{enumerate}
+\subsection{Procedure:}
+\label{sec:org835f90b}
+\begin{enumerate}
+\item User is on webpage of Service, and can choose to authenticate using EpicAuth.
+\item -> User clicks button.
+\item <- Service sends list of To Be Verefied Datasnippets(TBVDs) to be provided by user.
+\item Client-side software shows User what TBVDs are requested. User can decide between:
+a) Cancel. Stops process here.
+b) User can pick which identity they want to use. (Only ones that contain all required TBVDs are selectable)
+  b') After selecting Identity, for each datasnippet, which alternative could be used.
+\item -> User sends list of selected VDs to Service.
+\item Service checks if VDs are Valid.
+\end{enumerate}
+a) Invalid. Returns failure response to User.
+b) Valid. Continue
+\begin{enumerate}
+\item Service creates Authentication Token.
+\item <- Service returns Authentication Token to Client.
+\item Client can decide where to store Authentication Token for future use.
+\begin{itemize}
+\item Locally
+\item In the Blockchain (so other devices that share same Identity(privkey) can now also see/use this authentication token.
+\end{itemize}
+\item Client has been Authenticated Successfully.
+\end{enumerate}
+
+\section{Recurring ('Automatic') Authentication}
+\label{sec:orgc966fea}
+\subsection{Players:}
+\label{sec:orge285d4e}
+\subsubsection{User}
+\label{sec:orgf90c0e2}
+\subsubsection{Service}
+\label{sec:org087ce32}
+\subsection{Procedure:}
+\label{sec:orge2a6785}
+\begin{enumerate}
+\item User visits webpage of Service.
+\item Client-side software sees that he has an Authentication Token for this Service (by checking local storage, by checking Blockchain Identity Contract for references to Authentication Tokens)
+\item -> Client sends Authentication Token to Service.
+\item Service decrypts Authentication Token and checks if not yet expired.
+a) Expired. Procedure stops here. Return failure. (Redirect to normal Authentication Flow and return TBVDs?)
+b) Continue.
+\item <- Service logs in Client, and returns success.
+\end{enumerate}
+
+\section{Verification}
+\label{sec:orgd03a8eb}
+\subsection{Players:}
+\label{sec:orgd801fac}
+\subsubsection{User}
+\label{sec:orga609c0b}
+\subsubsection{Verifier (Service)}
+\label{sec:org9ae8d88}
+\subsection{Procedure:}
+\label{sec:org54e5d3a}
+\begin{enumerate}
+\item Through some external, verification-type-based means, some information might be verified for a User's Identity by the Verifier.
+\item At this time, the Verifier creates a Verification Datasnippet.
+\begin{itemize}
+\item Optionally, the Service might create a Revocation Token (that is referenced from the Verification Datasnippet). This Revocation Token is put on the Blockchain.
+\end{itemize}
+\item <- Service sends Verification Token to User.
+\item User decides whether to store Verification Token (encrypted!) only locally, or also as part of their Blockchain Identity Contract.
+\end{enumerate}
+
+\section{Data Types:}
+\label{sec:org138c4d5}
+note: Not all of these are stored on the blockchain!
+\subsection{List of 'To Be Verified Datasnippets'(TBVDs):}
+\label{sec:org392820c}
+\subsubsection{Each element of list is (unordered) set of alternatives.}
+\label{sec:orgcada34c}
+\subsubsection{Each alternative is a \{key, verified\(_{\text{id}}\)\}, where `key` is some (conventionalized) string value, and `verifier\(_{\text{id}}\)` is a reference to the Service that should have verified it.}
+\label{sec:orga2ed2f8}
+\subsubsection{A special alternative is called 'none', which is used in case of optional datasnippets.}
+\label{sec:orgca0485f}
+\subsection{Verified Datasnippets (VDs):}
+\label{sec:org332eb13}
+\subsubsection{Each Datasnippet is: \{key, verifier\(_{\text{id}}\), data, revocation\(_{\text{ref}}\), verifier\(_{\text{signature}}\)\}}
+\label{sec:org0d49361}
+\begin{enumerate}
+\item key: Key that matches TBVD key.
+\label{sec:org987a297}
+\item data: string-data.
+\label{sec:org7dfddd7}
+\item verifier\(_{\text{id}}\): ID of verifier (matches with TBVD verifier\(_{\text{id}}\))
+\label{sec:org9d5c2fb}
+\item revocation\(_{\text{ref}}\): Reference (blockchain address) to location of Revocation Contract. Might be 'null' in case that `verifier` decided that was okay.
+\label{sec:org4f95324}
+\item verifier\(_{\text{signature}}\): Cryptographic Signature of delimited concatenation of all of above fields.
+\label{sec:org7e216fb}
+\end{enumerate}
+\subsubsection{Validity can be verified by Service by checking if the status of the Revocation Contract is modified to be 'revoked'.}
+\label{sec:org16b3576}
+\subsection{Revocation Token}
+\label{sec:orgc39308b}
+\subsubsection{Stored in Blockchain by Service (at the same time that a Verified Datasnippet is provided to a User).}
+\label{sec:org5fdba12}
+\subsubsection{Contains a list of addresses of Service Contracts or Identity Contracts that are allowed to revoke it at a later time (which might only be Service, but possibly also others).}
+\label{sec:org2333475}
+\subsubsection{Contains a field that can be changed which is 'valid' at first, and might be changed (once, irreversibly) to 'revoked'.}
+\label{sec:org4c5f9d5}
+\subsubsection{Is referenced from a Verified Datasnippet.}
+\label{sec:org77964cf}
+\subsection{Authentication Token}
+\label{sec:org57f7cdd}
+\subsubsection{Encrypted by Service with public key of Service}
+\label{sec:org99fdbdd}
+\begin{enumerate}
+\item So later, only Service can read it again.
+\label{sec:org33876c6}
+\end{enumerate}
+\subsubsection{Contains timestamp of Authentication, and possibly some (small amount of) other metadata.}
+\label{sec:orgd2c2b3e}
+\subsubsection{User can decide whether to store this Authentication Token as part of his Identity Contract on the Blockchain, or only store it locally.}
+\label{sec:orgdc4ae92}
+\end{document}
