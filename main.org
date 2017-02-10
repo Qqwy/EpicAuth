@@ -1,0 +1,17 @@
+* Voorbeeld:
+** Pietje wil betalen bij Bol.com
+*** Pietje zit bij de Rabobank
+*** de Rabobank heeft al eerder een gesigneerde verklaring naar Pietje gestuurd. (deze staat encrypted op Ethereum)
+*** Pietje wil afrekenen bij Bol.com
+*** Bol.com wil weten dat Pietje een bestaande bankrekening heeft.
+*** Bol.com stuurt verzoek aan Pietje om bankverklaring te delen.
+*** Pietje kan beslissen eerdere gesigneerde verklaring naar Bol.com te sturen.
+*** Bol.com kan nu verifieren of verklaring inderdaad door Rabobank ondertekend is.
+*** Bol.com kan daarnaast verifieren of Rabobank ondertussen niet in een publieke transactie publiekelijk (de hash van de) bankrekening van Pietje heeft geblokkeerd.
+
+
+* Algemene Transacties
+** Private verklaring die Alice aan Bob geeft
+*** En als backup versleutelt met Bob's public key op Ethereum zet?
+** Publieke transactie van Alice om verklaring met eerder uitgegeven ID gaande over Bob te blokkeren.
+** Private transactie van 
