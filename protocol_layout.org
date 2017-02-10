@@ -10,13 +10,17 @@
 *** Bol.com kan daarnaast verifieren of Rabobank ondertussen niet in een publieke transactie publiekelijk (de hash van de) bankrekening van Pietje heeft geblokkeerd.
 
 
-* Algemene Transacties
-** Private verklaring die Alice aan Bob geeft
+* Algemene Transacties/Objecten
+** Identiteit Alice. ('Service Contract')
+** Identiteit Bob. (Identity Contract')
+** Private verklaring die Alice aan Bob geeft ('Broker Contract'?)
 *** En als backup versleutelt met Bob's public key op Ethereum zet?
 ** Publieke transactie van Alice om verklaring met eerder uitgegeven ID gaande over Bob te blokkeren.
 ** Private transactie die Alice maakt voor Bob waardoor Bob later met 'key' om later in één keer in te kunnen loggen zonder opnieuw te authenticaten bij Alice.
 *** Zowel rechtstreeks naar Bob gestuurd als gebackup't op Ethereum, zodat automatisch gedeeld wordt tussen systemen van Bob.
 *** Wordt natuurlijk alleen gemaakt door Alice wanneer Alice tevreden is met de verklaringen die Bob met Alice gedeeld heeft.
+*** -> Subgroep van 'Broker Contract'. 
 
+ 
 * Problemen:
 ** Hoe zowel veilig als gebruiksvriendelijk maken?
