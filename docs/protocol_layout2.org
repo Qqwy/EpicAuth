@@ -1,0 +1,81 @@
+The EpicAuth protocol has two separate parts:
+
+1) Authentication
+2) Verification.
+
+As part of Authentication Sequences, a Service might ask for zero or more pieces of Verified information.
+
+
+* Authentication
+** Players:
+*** User: A single identity of a user. User wants to authenticate with this identity at Service.
+**** Has a public/private key pair.
+*** Service: A service that has many users. Users can register/login iff they are able to authenticate here.
+**** Has a public/private key pair.
+** Procedure:
+  1) User is on webpage of Service, and can choose to authenticate using EpicAuth.
+  2) -> User clicks button.
+  3) <- Service sends list of To Be Verefied Datasnippets(TBVDs) to be provided by user.
+  4) Client-side software shows User what TBVDs are requested. User can decide between:
+    a) Cancel. Stops process here.
+    b) User can pick which identity they want to use. (Only ones that contain all required TBVDs are selectable)
+      b') After selecting Identity, for each datasnippet, which alternative could be used.
+  5) -> User sends list of selected VDs to Service.
+  6) Service checks if VDs are Valid.
+  a) Invalid. Returns failure response to User.
+  b) Valid. Continue
+  7) Service creates Authentication Token.
+  8) <- Service returns Authentication Token to Client.
+  9) Client can decide where to store Authentication Token for future use.
+    - Locally
+    - In the Blockchain (so other devices that share same Identity(privkey) can now also see/use this authentication token.
+  10) Client has been Authenticated Successfully.
+
+* Recurring ('Automatic') Authentication
+** Players:
+*** User
+*** Service
+** Procedure:
+  1) User visits webpage of Service.
+  2) Client-side software sees that he has an Authentication Token for this Service (by checking local storage, by checking Blockchain Identity Contract for references to Authentication Tokens)
+  3) -> Client sends Authentication Token to Service.
+  4) Service decrypts Authentication Token and checks if not yet expired.
+    a) Expired. Procedure stops here. Return failure. (Redirect to normal Authentication Flow and return TBVDs?)
+    b) Continue.
+  5) <- Service logs in Client, and returns success.
+
+* Verification
+** Players:
+*** User
+*** Verifier (Service)
+** Procedure:
+  1) Through some external, verification-type-based means, some information might be verified for a User's Identity by the Verifier.
+  2) At this time, the Verifier creates a Verification Datasnippet.
+    - Optionally, the Service might create a Revocation Token (that is referenced from the Verification Datasnippet). This Revocation Token is put on the Blockchain.
+  3) <- Service sends Verification Token to User.
+  4) User decides whether to store Verification Token (encrypted!) only locally, or also as part of their Blockchain Identity Contract.
+
+* Data Types:
+ note: Not all of these are stored on the blockchain!
+** List of 'To Be Verified Datasnippets'(TBVDs):
+*** Each element of list is (unordered) set of alternatives.
+*** Each alternative is a {key, verified_id}, where `key` is some (conventionalized) string value, and `verifier_id` is a reference to the Service that should have verified it.
+*** A special alternative is called 'none', which is used in case of optional datasnippets.
+** Verified Datasnippets (VDs):
+*** Each Datasnippet is: {key, verifier_id, data, revocation_ref, verifier_signature}
+**** key: Key that matches TBVD key.
+**** data: string-data.
+**** verifier_id: ID of verifier (matches with TBVD verifier_id)
+**** revocation_ref: Reference (blockchain address) to location of Revocation Contract. Might be 'null' in case that `verifier` decided that was okay.
+**** verifier_signature: Cryptographic Signature of delimited concatenation of all of above fields.
+*** Validity can be verified by Service by checking if the status of the Revocation Contract is modified to be 'revoked'.
+** Revocation Token
+*** Stored in Blockchain by Service (at the same time that a Verified Datasnippet is provided to a User).
+*** Contains a list of addresses of Service Contracts or Identity Contracts that are allowed to revoke it at a later time (which might only be Service, but possibly also others).
+*** Contains a field that can be changed which is 'valid' at first, and might be changed (once, irreversibly) to 'revoked'.
+*** Is referenced from a Verified Datasnippet.
+** Authentication Token
+*** Encrypted by Service with public key of Service
+**** So later, only Service can read it again.
+*** Contains timestamp of Authentication, and possibly some (small amount of) other metadata.
+*** User can decide whether to store this Authentication Token as part of his Identity Contract on the Blockchain, or only store it locally.
