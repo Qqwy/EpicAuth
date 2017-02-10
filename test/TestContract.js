@@ -5,7 +5,9 @@ contract('TestContract', function(accounts) {
     return TestContract.deployed().then(function(instance) {
       return instance.getMe.call();
     }).then(function(balance) {
-      assert.equal(balance.valueOf(), accounts[1], "I'm not me!");
+      assert.equal(balance.valueOf(), accounts[0], "I'm not me!");
     });
+
+
   });
 });
