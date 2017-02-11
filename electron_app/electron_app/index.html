@@ -5,17 +5,23 @@
     <title>Hello World!</title>
     <link href="semantic-ui.min.css" rel="stylesheet"/>
     <link href="style.css" rel="stylesheet"/>
+
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
     <script>
      let jQuery = $ = require('./jquery-3.1.1.min.js');
      require('./semantic-ui.min.js');
      require('./renderer.js');
     </script>
+    <script>if (window.module) module = window.module;</script>
+
 
   </head>
   <body>
     <div class="ui container">
+        <p>
+        </p>
         <h1 class="ui centered header ">
-            EpicAuth Me!!!
+            EpicAuth Login Request
         </h1>
 
         <div class="teal ui icon message">
@@ -24,8 +30,8 @@
                 <div class="header">
                     Choose Wisely
                 </div>
-                what data you want to share with
-                <strong class="service_name">???</strong>
+                what data do you want to share with
+                <strong class="service_name">BitHug</strong>?
             </div>
         </div>
 
@@ -35,7 +41,7 @@
             <a class="item" data-tab="third">CatLover99</a>
         </div>
         <div class="ui bottom attached tab segment active" data-tab="first">
-            <div class="ui one column centered grid">
+            <div class="ui one thin column centered grid">
                 <div class="column">
                     Identity of
                     <strong> Joe </strong>

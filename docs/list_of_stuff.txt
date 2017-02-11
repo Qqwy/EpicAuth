@@ -1,0 +1,17 @@
+Problems:
+- Existing authentication processes are centralized: Impossible to combine anonimity with identity.
+ - If Service B wants to know some detail provided by Service A, this means that Service A  knows that User 1 uses Service B.
+- If Service B wants to know some detail of User 1 from Service A, they request data from Service A directly.
+- Hard for user to know what data is actually exchanged between parties.
+- Service A now knows about User 1 using Service B.
+
+Solutions:
+- Put the user in _full_ control over what data is shared.
+ - User decides what, when and how to share data.
+- You pay for what you use:
+  - Users pay a tiny fee:
+   - when creating a new identity.
+   - when storing an Authentication or Verification Token to allow cross-device access.
+  - Services pay a tiny fee:
+   - to create a Revocation Certificate that can be used to retract a Verification Token at a later time.
+  - REST IS FREE!!!

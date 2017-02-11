@@ -11,4 +11,3 @@ $(function(){
     navigator.registerProtocolHandler("web+epicauth", self.location + '?q=%s', "EpicAuth URI");
 });
 
-console.log("TEST");
