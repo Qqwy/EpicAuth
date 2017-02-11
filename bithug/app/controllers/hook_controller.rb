@@ -1,15 +1,16 @@
 # ToDo:
 # - Check of data dezelfde is als gevraagde data (correct antwoord op demand)
 # - Check signatures van data snippets (ethereum gem)
+require './lib/epic_auth_service.rb'
 
 class HookController < ApplicationController
 
   def token
     token = EpicAuth::Service::AuthenticationToken.decrypt(params[:token])
-    if token.iat < 1.month.ago
+    if Time.at(token.iat).to_datetime < 1.month.ago
       render ''
     end
-    @user = User.find_by(token.user_id)
+    @user = User.find(token.user_id)
   end
 
   def check_demand_response
@@ -52,8 +53,8 @@ class HookController < ApplicationController
     valid = true
     demand_responses = []
     config.demand_requests.each do |request|
-      demand_response = snippets.find{|snippet| snippet[:key] == request[:type] && request[:validated_by].contains? {|validator| snippet[:verifier_id] == validator[:address] } }
-      valid = false unless demand_reponse || request[:optional]
+      demand_response = snippets.find{|snippet| snippet.key == request[:type] && request[:validated_by].any? {|validator| snippet.verifier_id == validator[:address] } }
+      valid = false unless demand_response || request[:optional]
       return unless valid
       demand_responses << demand_response
     end
@@ -61,8 +62,6 @@ class HookController < ApplicationController
     #TODO: Ethereum verification
     config.successful_response_callback
 
-    respond_to do |format|
-      format.json { { token: EpicAuth::Service::AuthenticationToken.new(response[:user_id]).encrypt}.to_json }
-    end
+    render json: { token: EpicAuth::Service::AuthenticationToken.new(response[:user_id]).encrypt}.to_json
   end
 end

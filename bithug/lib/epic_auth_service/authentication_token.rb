@@ -16,11 +16,11 @@ module EpicAuth
         data = metadata.clone
         data[:user_id] = user_id
         data[:iat] = (iat || DateTime.now.utc).to_i
-        Base64.encode64(self.class.public_key.public_encrypt(data.to_json))
+        Base64.urlsafe_encode64(self.class.public_key.public_encrypt(data.to_json))
       end
 
       def self.decrypt(string)
-        data = JSON.parse(private_key.private_decrypt(Base64.decode64(string))).with_indifferent_access
+        data = JSON.parse(private_key.private_decrypt(Base64.urlsafe_decode64(string))).with_indifferent_access
         user_id = data[:user_id]
         iat = data[:iat]
         metadata = data.except('user_id', 'iat')

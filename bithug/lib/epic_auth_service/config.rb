@@ -5,8 +5,8 @@ module EpicAuth
       attr_accessor :successful_response_callback
 
       def initialize(demands = nil, successful_response_callback = nil)
-        self.demands = demands || self.class.standard_demands
-        self.successful_response_callback = successful_response_callback || Proc.new
+        @demands = demands || self.class.standard_demands
+        self.successful_response_callback = successful_response_callback || Proc.new { }
       end
 
       def demand_requests
