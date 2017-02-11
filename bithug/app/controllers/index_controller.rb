@@ -1,5 +1,6 @@
 class IndexController < ApplicationController
   def login
+
   end
 
   def dashboard
