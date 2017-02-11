@@ -4,5 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // var height = document.body.offsetHeight;
     // self.resizeTo(500, height);
     console.log("TEST");
+    $(".ui.tabular.menu .item").tab();
     $(".ui.dropdown").dropdown({direction: 'downward'});
 });
