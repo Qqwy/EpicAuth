@@ -1,4 +1,4 @@
-% Created 2017-02-11 Sat 00:49
+% Created 2017-02-11 Sat 01:05
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -39,23 +39,23 @@ As part of Authentication Sequences, a Service might ask for zero or more pieces
 
 
 \section{Authentication}
-\label{sec:org9f71c4c}
+\label{sec:org90569ec}
 \subsection{Players:}
-\label{sec:org28718c6}
+\label{sec:org46cc5b0}
 \subsubsection{User: A single identity of a user. User wants to authenticate with this identity at Service.}
-\label{sec:org69064d1}
+\label{sec:org5c1de7c}
 \begin{enumerate}
 \item Has a public/private key pair.
-\label{sec:org62c8df5}
+\label{sec:org97272a2}
 \end{enumerate}
 \subsubsection{Service: A service that has many users. Users can register/login iff they are able to authenticate here.}
-\label{sec:org230d7a7}
+\label{sec:orgf32b99c}
 \begin{enumerate}
 \item Has a public/private key pair.
-\label{sec:org4195690}
+\label{sec:org53f5032}
 \end{enumerate}
 \subsection{Procedure:}
-\label{sec:org835f90b}
+\label{sec:org5617354}
 \begin{enumerate}
 \item User is on webpage of Service, and can choose to authenticate using EpicAuth.
 \item -> User clicks button.
@@ -81,15 +81,15 @@ b) Valid. Continue
 \end{enumerate}
 
 \section{Recurring ('Automatic') Authentication}
-\label{sec:orgc966fea}
+\label{sec:org52bc33f}
 \subsection{Players:}
-\label{sec:orge285d4e}
+\label{sec:orgd05d221}
 \subsubsection{User}
-\label{sec:orgf90c0e2}
+\label{sec:org0c0f963}
 \subsubsection{Service}
-\label{sec:org087ce32}
+\label{sec:org58d9287}
 \subsection{Procedure:}
-\label{sec:orge2a6785}
+\label{sec:org3e23538}
 \begin{enumerate}
 \item User visits webpage of Service.
 \item Client-side software sees that he has an Authentication Token for this Service (by checking local storage, by checking Blockchain Identity Contract for references to Authentication Tokens)
@@ -101,15 +101,15 @@ b) Continue.
 \end{enumerate}
 
 \section{Verification}
-\label{sec:orgd03a8eb}
+\label{sec:org9b52712}
 \subsection{Players:}
-\label{sec:orgd801fac}
+\label{sec:orga9480c6}
 \subsubsection{User}
-\label{sec:orga609c0b}
+\label{sec:orga4f7662}
 \subsubsection{Verifier (Service)}
-\label{sec:org9ae8d88}
+\label{sec:org6870408}
 \subsection{Procedure:}
-\label{sec:org54e5d3a}
+\label{sec:orgd06decc}
 \begin{enumerate}
 \item Through some external, verification-type-based means, some information might be verified for a User's Identity by the Verifier.
 \item At this time, the Verifier creates a Verification Datasnippet.
@@ -121,54 +121,56 @@ b) Continue.
 \end{enumerate}
 
 \section{Data Types:}
-\label{sec:org138c4d5}
+\label{sec:org6c653a6}
 note: Not all of these are stored on the blockchain!
 \subsection{List of 'To Be Verified Datasnippets'(TBVDs):}
-\label{sec:org392820c}
+\label{sec:org90628f4}
 \subsubsection{Each element of list is (unordered) set of alternatives.}
-\label{sec:orgcada34c}
+\label{sec:org4e5a05a}
 \subsubsection{Each alternative is a \{key, verified\(_{\text{id}}\)\}, where `key` is some (conventionalized) string value, and `verifier\(_{\text{id}}\)` is a reference to the Service that should have verified it.}
-\label{sec:orga2ed2f8}
+\label{sec:org2bbc6db}
 \subsubsection{A special alternative is called 'none', which is used in case of optional datasnippets.}
-\label{sec:orgca0485f}
+\label{sec:org2503dcb}
 \subsection{Verified Datasnippets (VDs):}
-\label{sec:org332eb13}
-\subsubsection{Each Datasnippet is: \{key, verifier\(_{\text{id}}\), data, revocation\(_{\text{ref}}\), verifier\(_{\text{signature}}\)\}}
-\label{sec:org0d49361}
+\label{sec:org83193ae}
+\subsubsection{Each Datasnippet is: \{subject\(_{\text{id}}\), key, verifier\(_{\text{id}}\), data, revocation\(_{\text{ref}}\), verifier\(_{\text{signature}}\)\}}
+\label{sec:orge8c6330}
 \begin{enumerate}
+\item subject\(_{\text{id}}\): ID (Blockchain address) of the Identity to which this Verified Datasnippet belongs.
+\label{sec:org0f62ac1}
 \item key: Key that matches TBVD key.
-\label{sec:org987a297}
+\label{sec:org9d4e415}
 \item data: string-data.
-\label{sec:org7dfddd7}
+\label{sec:org3cf626d}
 \item verifier\(_{\text{id}}\): ID of verifier (matches with TBVD verifier\(_{\text{id}}\))
-\label{sec:org9d5c2fb}
+\label{sec:org069a0aa}
 \item revocation\(_{\text{ref}}\): Reference (blockchain address) to location of Revocation Contract. Might be 'null' in case that `verifier` decided that was okay.
-\label{sec:org4f95324}
+\label{sec:orgd025f7d}
 \item verifier\(_{\text{signature}}\): Cryptographic Signature of delimited concatenation of all of above fields.
-\label{sec:org7e216fb}
+\label{sec:orgb581ca0}
 \end{enumerate}
 \subsubsection{Validity can be verified by Service by checking if the status of the Revocation Contract is modified to be 'revoked'.}
-\label{sec:org16b3576}
+\label{sec:orge3b38b2}
 \subsection{Revocation Token}
-\label{sec:orgc39308b}
+\label{sec:org1dba46d}
 \subsubsection{Stored in Blockchain by Service (at the same time that a Verified Datasnippet is provided to a User).}
-\label{sec:org5fdba12}
+\label{sec:org59a3fc7}
 \subsubsection{Contains a list of addresses of Service Contracts or Identity Contracts that are allowed to revoke it at a later time (which might only be Service, but possibly also others).}
-\label{sec:org2333475}
+\label{sec:org0f4bb46}
 \subsubsection{Contains a field that can be changed which is 'valid' at first, and might be changed (once, irreversibly) to 'revoked'.}
-\label{sec:org4c5f9d5}
+\label{sec:orgcedaed7}
 \subsubsection{Is referenced from a Verified Datasnippet.}
-\label{sec:org77964cf}
+\label{sec:orgfcecc51}
 \subsection{Authentication Token}
-\label{sec:org57f7cdd}
+\label{sec:org6a14791}
 \subsubsection{Encrypted by Service with public key of Service}
-\label{sec:org99fdbdd}
+\label{sec:orgec52b10}
 \begin{enumerate}
 \item So later, only Service can read it again.
-\label{sec:org33876c6}
+\label{sec:org3e83b59}
 \end{enumerate}
 \subsubsection{Contains timestamp of Authentication, and possibly some (small amount of) other metadata.}
-\label{sec:orgd2c2b3e}
+\label{sec:orgbc8aa68}
 \subsubsection{User can decide whether to store this Authentication Token as part of his Identity Contract on the Blockchain, or only store it locally.}
-\label{sec:orgdc4ae92}
+\label{sec:org3450c7f}
 \end{document}
