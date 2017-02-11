@@ -1,13 +1,13 @@
 pragma solidity ^0.4.0;
 
 contract Token {
-    string json_token;
+    bytes32 json_token;
 
 
-    function Token(string token){
+    function Token(bytes32 token){
         json_token = token;
     }
-    function getJsonToken() constant returns (string) {
+    function getJsonToken() constant returns (bytes32) {
         return json_token;
     }
 

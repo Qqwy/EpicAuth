@@ -33,6 +33,8 @@ contract Identity {
         return false;
     }
     tokens.push(new_key);
+    return true;
+
   }
 
 }

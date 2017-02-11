@@ -1,15 +1,17 @@
 var Identity = artifacts.require("./Identity.sol");
 var Service = artifacts.require("./Service.sol");
+var RevocationToken = artifacts.require("./RevocationToken.sol");
 var Token = artifacts.require("./Token.sol");
 
 contract('SiteLoginTest', function(accounts) {
     it('can login to website', function() {
         let test_user = Identity.new()
         let test_service = Service.new({from:accounts[1]})
+        let test_revocation_token = RevocationToken.new({from:accounts[2]})
 
         return Promise
-        .all([test_user, test_service])
-        .then( ([alice, bithug]) => {
+        .all([test_user, test_service, test_revocation_token])
+        .then( ([alice, bithug, revoke_token]) => {
             // alice requests login - NOP
             return [alice, bithug]
         })
@@ -20,12 +22,30 @@ contract('SiteLoginTest', function(accounts) {
                     {
                         type: "email",
                         optional: false,
-                        validated_by: ["github.com", "google.com"]
+                        validated_by: [
+                            {
+                                site: "github.com",
+                                address: 0xDEADBEEF
+                            },
+                            {
+                                site: "google.com",
+                                address: 0xCAFEBABE
+                            }
+                        ]
                     },
                     {
                         type: "phone",
                         optional: true,
-                        validated_by: ["facebook.com", "google.com"]
+                        validated_by: [
+                            {
+                                site: "github.com",
+                                address: 0xDEADCAFE
+                            },
+                            {
+                                site: "google.com",
+                                address: 0xCAFEBABE
+                            }
+                        ]
                     }
                 ],
                 "title": "Login to Bithug website",
@@ -46,7 +66,7 @@ contract('SiteLoginTest', function(accounts) {
                         "subject": accounts[0],
                         "data": "test@epicauth.org",
                         "revocation_ref": "123456789",
-                        "verifier_id": "google.com",
+                        "verifier_id": 0xDEADBEEF,
                         "verifier_signature": "AFEA234253235"
                     },
                     {
@@ -73,16 +93,24 @@ contract('SiteLoginTest', function(accounts) {
             // receive token and rights by client
             // create token contract
             // subdivide rights
-            let test_user = Token.new(token)
-
-            return [alice, bithug, test_user];
+            return  Token.new(web3.fromAscii(token,32))
+            .then(token_instance => {
+                // add new token instance to user
+                let contract_id = token_instance.contract.address
+                assert.isDefined(contract_id, "Token has not been added");
+                return alice.addToken.sendTransaction(contract_id)
+            })
+            .then(success => {
+                console.log(success)
+                assert.isTrue(success, "Token has not been added");
+                return [alice, bithug, addToken];
+            })
         })
-        .then( ([alice, bithug, token_contract]) => {
+        .then( ([alice, bithug, added_task]) => {
             // receive token and rights by client
             // create token contract
             // subdivide rights
-            let addToken = alice.addToken.sendTransaction(token_contract)
-
+            console.log(added_task)
             return [alice, bithug, addToken];
         })
     });
