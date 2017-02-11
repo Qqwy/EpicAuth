@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'index/login' # Login form.
+  get 'index/login_redirect_to_app', as: :login_redirect_to_app
 
   get 'index/dashboard' # Page for when logged in.
 
