@@ -28,7 +28,7 @@ contract Identity {
   function getTokens() constant returns (address[]){
     return tokens;
   }
-  function addToken(address new_key) returns (bool) {
+  function addToken(address new_key) returns (bool success) {
     if(owner == msg.sender){
         return false;
     }

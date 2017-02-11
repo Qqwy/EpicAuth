@@ -5,7 +5,7 @@ var Token = artifacts.require("./Token.sol");
 
 contract('SiteLoginTest', function(accounts) {
     it('can login to website', function() {
-        let test_user = Identity.new()
+        let test_user = Identity.new({from:accounts[0]})
         let test_service = Service.new({from:accounts[1]})
         let test_revocation_token = RevocationToken.new({from:accounts[2]})
 
@@ -97,21 +97,20 @@ contract('SiteLoginTest', function(accounts) {
             .then(token_instance => {
                 // add new token instance to user
                 let contract_id = token_instance.contract.address
-                assert.isDefined(contract_id, "Token has not been added");
+                assert.isDefined(contract_id, "No token has been found");
                 return alice.addToken.sendTransaction(contract_id)
             })
-            .then(success => {
-                console.log(success)
-                assert.isTrue(success, "Token has not been added");
-                return [alice, bithug, addToken];
+            .then(transaction => {
+                assert.isDefined(transaction, "Token has not been added");
+                return [alice, bithug];
             })
         })
-        .then( ([alice, bithug, added_task]) => {
+        .then( ([alice, bithug]) => {
             // receive token and rights by client
             // create token contract
             // subdivide rights
-            console.log(added_task)
-            return [alice, bithug, addToken];
+            // console.log(added_task)
+            return [alice, bithug];
         })
     });
 });
