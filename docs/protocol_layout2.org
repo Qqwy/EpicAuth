@@ -30,7 +30,7 @@ As part of Authentication Sequences, a Service might ask for zero or more pieces
     - Locally
     - In the Blockchain (so other devices that share same Identity(privkey) can now also see/use this authentication token.
   10) Client has been Authenticated Successfully.
-
+      
 * Recurring ('Automatic') Authentication
 ** Players:
 *** User
@@ -59,7 +59,7 @@ As part of Authentication Sequences, a Service might ask for zero or more pieces
  note: Not all of these are stored on the blockchain!
 ** List of 'To Be Verified Datasnippets'(TBVDs):
 *** Each element of list is (unordered) set of alternatives.
-*** Each alternative is a {key, verified_id}, where `key` is some (conventionalized) string value, and `verifier_id` is a reference to the Service that should have verified it.
+*** Each alternative is a {key, verifier_id}, where `key` is some (conventionalized) string value, and `verifier_id` is a reference to the Service that should have verified it.
 *** A special alternative is called 'none', which is used in case of optional datasnippets.
 ** Verified Datasnippets (VDs):
 *** Each Datasnippet is: {subject_id, key, verifier_id, data, revocation_ref, verifier_signature}

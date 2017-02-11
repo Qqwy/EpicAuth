@@ -5,7 +5,7 @@ List of TODOs for the Bithug app
 - [ ] Model for stored Verified Datasnippet that was received previously.
 - [ ] Model for Verification Tokens that Bithug gave to users, which importantly contains the Ethereum address at which it might be revoked later.
 * Ethereum-facing side:
-- [x] Class representing AuthenticatioToken.
+- [x] Class representing AuthenticationToken.
 - [ ] Class representing Revocation Tokens.
 - [ ] Class representing To Be Determined Datasnippet.
 - [ ] Class representing List of To Be Verified Datasnippets that can be serialized for presenting to a user.
