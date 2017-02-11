@@ -32,6 +32,7 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'semantic-ui-sass', git: 'https://github.com/doabit/semantic-ui-sass.git' # Semantic-UI CSS framework.
 gem 'ethereum' # Ethereum interaction.
+gem 'haml-rails', "~> 0.9" # HAML html markup
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
