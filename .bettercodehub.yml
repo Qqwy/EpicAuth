@@ -1,3 +1,5 @@
+exclude:
+- /browser_extension/_deps/Semantic-UI-CSS-master/.*
 component_depth: 1
 languages:
 - javascript
