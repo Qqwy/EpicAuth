@@ -10,7 +10,8 @@ class HookController < ApplicationController
     if Time.at(token.iat).to_datetime < 1.month.ago
       render ''
     end
-    @user = User.find(token.user_id)
+    user = User.find(token.user_id)
+    redirect_to dashboard_path if user
   end
 
   def check_demand_response
