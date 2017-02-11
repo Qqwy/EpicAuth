@@ -62,7 +62,8 @@ As part of Authentication Sequences, a Service might ask for zero or more pieces
 *** Each alternative is a {key, verified_id}, where `key` is some (conventionalized) string value, and `verifier_id` is a reference to the Service that should have verified it.
 *** A special alternative is called 'none', which is used in case of optional datasnippets.
 ** Verified Datasnippets (VDs):
-*** Each Datasnippet is: {key, verifier_id, data, revocation_ref, verifier_signature}
+*** Each Datasnippet is: {subject_id, key, verifier_id, data, revocation_ref, verifier_signature}
+**** subject_id: ID (Blockchain address) of the Identity to which this Verified Datasnippet belongs.
 **** key: Key that matches TBVD key.
 **** data: string-data.
 **** verifier_id: ID of verifier (matches with TBVD verifier_id)
