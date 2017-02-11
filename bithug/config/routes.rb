@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'index/login_redirect_to_app', as: :login_redirect_to_app
 
   get 'hooks/token/:token', to: 'hook#token'
+  post 'hooks/check_demand_response/', to: 'hook#check_demand_response'
 
   get 'index/dashboard' # Page for when logged in.
 
