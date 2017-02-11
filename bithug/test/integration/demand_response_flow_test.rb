@@ -8,8 +8,7 @@ class DemandResponseFlowTest < ActionDispatch::IntegrationTest
     get '/index/login_redirect_to_app'
     assert_response 302
 
-    post '/hooks/check_demand_response', format: :json
-    puts response.body
+    post '/hooks/check_demand_response', {params: {format: :json}}
     token = JSON.parse(response.body)["token"]
     assert_response :success
 
