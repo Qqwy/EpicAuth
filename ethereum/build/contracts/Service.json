@@ -1,0 +1,45 @@
+{
+  "contract_name": "Service",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getPublicKey",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "public_key",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "name": "new_public_key",
+          "type": "bytes32"
+        }
+      ],
+      "payable": false,
+      "type": "constructor"
+    }
+  ],
+  "unlinked_binary": "0x606060405234610000576040516020806100ce83398101604052515b60008190555b505b609d806100316000396000f300606060405263ffffffff60e060020a6000350416632e3344528114602c578063e0e349c4146048575b6000565b3460005760366064565b60408051918252519081900360200190f35b346000576036606b565b60408051918252519081900360200190f35b6000545b90565b600054815600a165627a7a72305820e2761913f43c4ac392d50b0dbd178e70a0aa15b5e98da2b5c1ece69f2fbc605a0029",
+  "networks": {},
+  "schema_version": "0.0.5",
+  "updated_at": 1486806656509
+}
