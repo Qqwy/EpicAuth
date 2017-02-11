@@ -6,4 +6,5 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log("TEST");
     $(".ui.tabular.menu .item").tab();
     $(".ui.dropdown").dropdown({direction: 'downward'});
+    navigator.registerProtocolHandler("web+epicauth", self.location + '?q=%s', "EpicAuth URI");
 });
