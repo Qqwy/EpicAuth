@@ -1,0 +1,24 @@
+%h1.ui.centered.header
+  Page!
+%p
+
+.ui.container
+  .ui.centered.two.column.grid
+    .column
+      .ui.form
+        .field
+          %label
+            username
+          %input{type: :text}
+        .field
+          %label
+            password
+          %input{type: :password}
+        .field
+          .ui.submit.button
+            Login the boring way...
+    .column
+      .ui.form
+        .field
+          .ui.huge.fluid.primary.button
+            Login with EpicAuth!
