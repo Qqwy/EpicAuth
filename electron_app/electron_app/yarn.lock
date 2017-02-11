@@ -530,6 +530,10 @@ ms@0.7.2:
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/ms/-/ms-0.7.2.tgz#ae25cf2512b3885a1d95d7f037868d8431124765"
 
+node@^0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/node/-/node-0.0.0.tgz#288d62f90530c763eff8d4831ee7343ab3d60793"
+
 normalize-package-data@^2.3.2, normalize-package-data@^2.3.4:
   version "2.3.5"
   resolved "https://registry.yarnpkg.com/normalize-package-data/-/normalize-package-data-2.3.5.tgz#8d924f142960e1777e7ffe170543631cc7cb02df"

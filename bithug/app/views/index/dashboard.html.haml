@@ -1,0 +1,16 @@
+%h1.ui.centered.header
+  .column
+    Dashboard
+  .column
+    = image_tag 'login/bithug_logo', class: 'ui centered image tiny'
+%p
+
+.ui.container
+  .ui.centered.two.column.grid
+    .column
+      .ui.button.fluid
+        = link_to 'Download verification token', download_verification_path
+    .column
+      .ui.button.fluid
+        = link_to 'Log out', logout_path
+

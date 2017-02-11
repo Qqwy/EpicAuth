@@ -1,24 +1,16 @@
 %h1.ui.centered.header
-  BitHug Login Page
+  .column
+    Sign in to BitHug
+  .column
+    = image_tag 'login/bithug_logo', class: 'ui centered image tiny'
 %p
 
 .ui.container
   .ui.centered.two.column.grid
+    #classic_login.column
+      .ui
+        = image_tag 'login/bithug_login', class: 'ui centered image', id: 'bithug_login'
     .column
-      .ui.form
-        .field
-          %label
-            username
-          %input{type: :text}
-        .field
-          %label
-            password
-          %input{type: :password}
-        .field
-          .ui.submit.button
-            Login the boring way...
-    .column
-      .ui.form
-        .field
-          .ui.huge.fluid.primary.button
-            Login with EpicAuth!
+      = image_tag 'login/epicauth_approved', class: 'ui centered image medium'
+      .ui.huge.fluid.primary.button.login-with-epicauth
+        = link_to 'Login with EpicAuth', login_redirect_to_app_path, class: 'bland-button'
