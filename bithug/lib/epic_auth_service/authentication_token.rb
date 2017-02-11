@@ -3,7 +3,6 @@ require 'openssl'
 module EpicAuth
   module Service
     class AuthenticationToken
-
       attr_accessor :metadata, :user_id, :iat
 
       def initialize(user_id, metadata = {}.with_indifferent_access, iat = nil)
