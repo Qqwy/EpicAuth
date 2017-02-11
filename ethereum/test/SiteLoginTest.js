@@ -1,5 +1,6 @@
 var Identity = artifacts.require("./Identity.sol");
 var Service = artifacts.require("./Service.sol");
+var Token = artifacts.require("./Token.sol");
 
 contract('SiteLoginTest', function(accounts) {
     it('can login to website', function() {
@@ -64,7 +65,25 @@ contract('SiteLoginTest', function(accounts) {
         .then( ([alice, bithug, response]) => {
             // server checks if it's to it's standards
             assert.equal(response['my_contract'], accounts[0], "no email");
+            // TODO: temp token, and create token
+            let token = "SOME ENCRYPTED JSON TOKEN"
+            return [alice, bithug,token];
+        })
+        .then( ([alice, bithug, token]) => {
+            // receive token and rights by client
+            // create token contract
+            // subdivide rights
+            let test_user = Token.new(token)
 
+            return [alice, bithug, test_user];
+        })
+        .then( ([alice, bithug, token_contract]) => {
+            // receive token and rights by client
+            // create token contract
+            // subdivide rights
+            let addToken = alice.addToken.sendTransaction(token_contract)
+
+            return [alice, bithug, addToken];
         })
     });
 });

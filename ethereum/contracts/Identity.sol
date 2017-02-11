@@ -24,9 +24,15 @@ contract Identity {
 
 
   // Tokens
-  bytes32[] tokens;
-  function getTokens() constant returns (bytes32[]){
+  address[] tokens;
+  function getTokens() constant returns (address[]){
     return tokens;
+  }
+  function addToken(address new_key) returns (bool) {
+    if(owner == msg.sender){
+        return false;
+    }
+    tokens.push(new_key);
   }
 
 }

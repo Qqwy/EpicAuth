@@ -7,5 +7,8 @@ contract Token {
     function Token(string token){
         json_token = token;
     }
+    function getJsonToken() constant returns (string) {
+        return json_token;
+    }
 
 }
