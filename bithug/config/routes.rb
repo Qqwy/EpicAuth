@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
-  get 'index/login'
+  get 'index/login' # Login form.
 
-  get 'index/dashboard'
+  get 'index/dashboard' # Page for when logged in.
 
-  get 'index/logout'
+  get 'index/logout' # Redirect action to destroy session.
 
-  get 'index/download_verification'
+  get 'index/download_verification' # Initiates verification step where user obtains extra verification info.
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  root controller: :index, action: :login
 end
