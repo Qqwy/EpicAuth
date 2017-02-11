@@ -14,28 +14,7 @@ class HookController < ApplicationController
   end
 
   def check_demand_response
-    # response = params[:response]
-    response = {
-        user_id: 1,
-        share_data: [
-            {
-                key: 'email',
-                subject: 'public_key',
-                data: 'test@epicauth.org',
-                revocation_ref: '123456789',
-                verifier_id: 0xDEADBEEF,
-                verifier_signature: 'AFEA234253235'
-            },
-            {
-                key: 'phone',
-                subject: 'public_key',
-                data: '+123456789',
-                revocation_ref: '123456789',
-                verifier_id: 'facebook.com',
-                verifier_signature: 'ASDAFGARASASD2342346'
-            },
-        ]
-    }
+    response = JSON.parse(params[:response]).with_indifferent_access
 
     snippets = response[:share_data].inject([]) do |snippets, data_snippet|
       snippets << EpicAuth::Service::VerifiedDataSnippet.new(
@@ -55,13 +34,15 @@ class HookController < ApplicationController
     config.demand_requests.each do |request|
       demand_response = snippets.find{|snippet| snippet.key == request[:type] && request[:validated_by].any? {|validator| snippet.verifier_id == validator[:address] } }
       valid = false unless demand_response || request[:optional]
-      return unless valid
-      demand_responses << demand_response
+      return render status: 401 unless valid
+      demand_responses << demand_response if demand_response
     end
 
     #TODO: Ethereum verification
-    config.successful_response_callback
+    metadata = config.successful_response_callback.() || Hash.new
+    token = EpicAuth::Service::AuthenticationToken.new(response[:user_id], metadata)
 
-    render json: { token: EpicAuth::Service::AuthenticationToken.new(response[:user_id]).encrypt}.to_json
+    return render json: { token: token.encrypt }
   end
+  
 end
