@@ -1,0 +1,12 @@
+Questions:
+- How to easilly store strings in a chain
+    - e.g. setJson getJson
+    - e.g. addToJsonList and getJsonLists
+    - https://github.com/ConsenSys/eth-lightwallet
+    - https://ipfs.io/
+
+
+
+# todo
+ - Flying spaghetti monster for bithug
+ -
