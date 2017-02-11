@@ -1,22 +1,15 @@
 %h1.ui.centered.header
-  BitHug Login Page
+  .column
+    Sign in to BitHug
+  .column
+    = image_tag 'login/bithug_logo', class: 'ui centered image tiny'
 %p
 
 .ui.container
-  .ui.centered.two.column.grid
+  .ui.centered.one.column.grid
     .column
-      .ui.form
-        .field
-          %label
-            username
-          %input{type: :text}
-        .field
-          %label
-            password
-          %input{type: :password}
-        .field
-          .ui.submit.button
-            Login the boring way...
+      .ui
+        = image_tag 'login/bithug_login', class: 'ui centered image'
     .column
       .ui.form
         .field
