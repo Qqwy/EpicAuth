@@ -25,6 +25,11 @@ $(function(){
         $('.cancel_button').click(function(){
             window.close();
         });
+        $(".submit_button").click(function(){
+            submitRequestResponse();
+            console.log("TODO: Retrieve token as answer")
+            window.close();
+        });
     } else {
         // Run general mode.
         console.log("General Mode!", arguments.length, arguments[0], arguments[1])
@@ -49,15 +54,26 @@ function renderRequestJSON(request_json){
         var field = $(".hidden.field.placeholder").clone();
         field.removeClass("placeholder");
         $("label", field).html(request.type);
-        switch(request.type){
-        case 'phone':
-            $('i', field).addClass("phone icon")
-            break;
-        case 'email':
-            $('i', field).addClass("mail outline icon")
-            break;
-        };
+        $("i", field).addClass(requestIconClass(request.type));
         console.log(field);
         $(".requests_form").prepend(field);
     });
+}
+
+function requestIconClass(request_type){
+    switch(request_type){
+    case 'phone':
+        return "phone icon";
+    case 'email':
+        return "mail outline icon";
+    default:
+        return "question icon";
+    };
+}
+
+function submitRequestResponse(){
+    console.log("TODO: Submit request response")
+    console.log("TODO: parse answer request response")
+    shell = require('electron').shell;
+    shell.openExternal('http://example.com/?q=todo_hardcoded_url');
 }
