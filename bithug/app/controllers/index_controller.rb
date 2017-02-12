@@ -19,15 +19,7 @@ class IndexController < ApplicationController
   end
 
   def download_verification
-    response = {
-        key: 'email',
-        subject: 'public_key',
-        data: 'test@epicauth.org',
-        revocation_ref: '123456789',
-        verifier_id: 0xDEADBEEF,
-        verifier_signature: 'AFEA234253235'
-    }
-
+    response = EpicAuth::Service::Config.stub_verification
     render json: EpicAuth::Service::VerifiedDataSnippet.new(
         response[:key],
         response[:data],

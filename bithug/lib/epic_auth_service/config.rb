@@ -16,6 +16,10 @@ module EpicAuth
       def self.standard_demands
         YAML.load_file('lib/epic_auth_service/standard_demands.yaml')
       end
+
+      def self.stub_verification
+        YAML.load_file('lib/epic_auth_service/stub_verification.yaml')
+      end
     end
   end
 end
