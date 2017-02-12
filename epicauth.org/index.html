@@ -78,11 +78,11 @@ function update() {
         var pos = 0;
         var strs = ["orization", "orization", "identification", "entificization"]
         setInterval(function (){
-            $('#textholder').fadeOut()
-            pos++;
-            $('#textholder').text(strs[pos % strs.length])
-            $('#textholder').fadeIn()
-
+            $('#textholder').fadeOut(function(){
+                pos++;
+                $('#textholder').text(strs[pos % strs.length])
+                $('#textholder').fadeIn()
+            })
         }, 3000);
     })
 </script>
