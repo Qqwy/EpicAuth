@@ -19,6 +19,10 @@ class IndexController < ApplicationController
                                           optional: false,
                                           validated_by: [
                                               {
+                                                  site: "epicauth.org",
+                                                  address: 0xDEADBEEF
+                                              },
+                                              {
                                                   site: "github.com",
                                                   address: 0xDEADBEEF
                                               },
@@ -34,6 +38,10 @@ class IndexController < ApplicationController
                                           validated_by: [
                                               {
                                                   site: "github.com",
+                                                  address: 0xDEADCAFE
+                                              },
+                                              {
+                                                  site: "epicauth.org",
                                                   address: 0xDEADCAFE
                                               },
                                               {

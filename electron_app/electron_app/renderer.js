@@ -47,7 +47,13 @@ $(function(){
 
         console.log("TEST");
         $(".ui.tabular.menu .item").tab();
-        $(".ui.dropdown").dropdown({direction: 'downward'});
+        $(".ui.dropdown").dropdown({
+            direction: 'downward',
+            onChange: function(value, text, $selectedItem) {
+                console.log("testst")
+                validateForm();
+            }
+        });
 
         $('.cancel_button').click(function(){
             window.close();
@@ -69,6 +75,7 @@ $(function(){
 
 
 });
+
 
 function handleStorageOfToken(token){
     var do_save = confirm("Do you want to save this token to your personal blockchain wallet?");
@@ -92,9 +99,9 @@ function renderRequestJSON(request_json, current_user){
     $('.custom_object').remove();
     $('.request_explanation').html(request_json.explanation);
     $('.service_name').html(request_json.title);
-    console.log(request_json.requests);
     request_json.requests.forEach(r => fillInSingleRequest(r, current_user));
     $('#form_details').html("");
+    validateForm();
 
 
 }
@@ -111,18 +118,45 @@ function fillInSingleRequest(request, current_user){
         let optional = request.optional ? " (optional)" : "";
         $("label", field).html(type + optional);
         $("i", field).addClass(requestIconClass(type));
-        items.forEach(function(datasnippet){
+        $(".menu", field).append("<div class='item' data-value='-1'>Don't select anything</div>");
+        items.forEach(function(datasnippet, index){
             let validated = trusted.indexOf(datasnippet.verifier_label) >= 0;
             let icon = validated ? "<i class='checkmark icon'></i>" : "<i class='warning sign icon'></i>";
-            $(".menu", field).append("<div class='item' value='" + datasnippet.data + "'>" + icon + datasnippet.data  +" (" + datasnippet.verifier_label  +")</div>");
+            let object = $("<div class='item' data-value='" + index + "'>" + icon + datasnippet.data  +" (" + datasnippet.verifier_label  +")</div>")
+            object.data('valid', validated)
+            object.data('json_object', datasnippet)
+            $(".menu", field).append(object);
         });
         field.addClass("custom_object");
         $(".requests_form").prepend(field);
-         $(".ui.tabular.menu .item").tab();
-        $(".ui.dropdown").dropdown({direction: 'downward'});
+        $(".ui.tabular.menu .item").tab();
+        $(".ui.dropdown").dropdown({
+            direction: 'downward',
+            onChange: function(value, text, $selectedItem) {
+                console.log("testst")
+                validateForm();
+            }
+
+        });
         console.log(field);
     });
 
+}
+function validateForm(){
+    let value_indexes = $('.requests_form .dropdown').dropdown("get item")
+    console.log(value_indexes)
+    let json_objects = value_indexes.map(datasnippet => $(datasnippet).data('json_object'))
+
+    let is_valid = value_indexes
+    .map(datasnippet => $(datasnippet).data('valid'))
+    .every(a => a == true)
+    console.log(json_objects)
+    console.log(is_valid)
+    if(is_valid){
+        $('.submit_button').prop("disabled", false);
+    }else{
+        $('.submit_button').prop("disabled", true);
+    }
 }
 
 function requestIconClass(request_type){
