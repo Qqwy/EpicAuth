@@ -13,6 +13,6 @@ class DemandResponseFlowTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     get "/hooks/token/#{token}"
-    assert_response :success
+    assert_response 302
   end
 end
