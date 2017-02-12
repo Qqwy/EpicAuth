@@ -15,7 +15,7 @@ let mainWindow
 function createWindow () {
 global.sharedObject = {encoded_token: process.argv };
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600})
+  mainWindow = new BrowserWindow({width: 800, height: 1000})
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({

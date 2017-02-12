@@ -62,21 +62,21 @@ function fillInSingleRequest(request){
 
     var stub_data = [{
         "key": "email",
-        "subject": id1.address,
+        "subject": 0xDEADBEEF,
         "data": "test@epicauth.org",
-        "revocation_ref": veri1.address,
-        "verifier_id": verification_account,
+        "revocation_ref": 0xDEADBEEF2,
+        "verifier_id": 0xDEADBABE,
         "verifier_signature": "AFEA234253235"
     }, {
         "key": "phone",
-        "subject": id1.address,
+        "subject": 0xCAFEBABE,
         "data": "+312141516",
-        "revocation_ref": veri2.address,
-        "verifier_id": verification_account,
+        "revocation_ref": 0xCAFEBABE2,
+        "verifier_id": 0xCAFEBEEF,
         "verifier_signature": "AFEA234253235"
     }];
     stub_data.forEach(function(datasnippet){
-        $(".menu", field).append("<div class='item' value='" + datasnipppet.data + "'>" +  +"</div>");
+        $(".menu", field).append("<div class='item' value='" + datasnippet.data + "'>" +  +"</div>");
     });
 
     $(".requests_form").prepend(field);
