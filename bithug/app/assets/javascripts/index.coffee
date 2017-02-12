@@ -10,4 +10,3 @@ $ ->
       $('#classic_login').remove()
       $('.ui.centered.two.column.grid').removeClass('two').addClass('one')
       $('.login-with-epicauth').addClass('')
-
