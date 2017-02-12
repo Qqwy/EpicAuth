@@ -1,7 +1,7 @@
 exclude:
 - /browser_extension/_deps/Semantic-UI-CSS-master/.*
 - .*.haml # Parsed incorrectly by Better Code Hub right now.
-- /bithug/config/environments/*.rb # Pre-generated config files with lots of (commented) constants and explanatory comments.
+- /bithug/config/environments/.* # Pre-generated config files with lots of (commented) constants and explanatory comments.
 - /bithug/public/404.html # Pre-generated error page.
 - /bithug/public/422.html # Pre-generated error page.
 - /bithug/public/500.html # Pre-generated error page.

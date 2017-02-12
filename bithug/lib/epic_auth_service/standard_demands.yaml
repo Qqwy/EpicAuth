@@ -1,0 +1,22 @@
+---
+:return_url: http://localhost:3000/hooks/token/$token
+:intermediate_url: http://localhost:3000/hooks/check_demand_response/
+:error_url: http://localhost:3000/error/
+:title: Login to Bithug website
+:explanation: You you want to use our service, please allow us to send you spam on
+  your mail and maybe call you on inpropriate times.
+:requests:
+- :type: email
+  :optional: false
+  :validated_by:
+  - :site: github.com
+    :address: 3735928559
+  - :site: google.com
+    :address: 3405691582
+- :type: phone
+  :optional: true
+  :validated_by:
+  - :site: github.com
+    :address: 3735931646
+  - :site: google.com
+    :address: 3405691582

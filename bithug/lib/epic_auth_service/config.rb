@@ -14,40 +14,35 @@ module EpicAuth
       end
 
       def self.standard_demands
+        YAML.load_file('lib/epic_auth_service/standard_demands.yaml')
+      end
+
+      def self.stub_verification
+        YAML.load_file('lib/epic_auth_service/stub_verification.yaml')
+      end
+
+      def self.standard_response
         {
-            title: 'Login to Bithug website',
-            explanation: 'You you want to use our service, please allow us to send you spam on your mail and maybe call you on inpropriate times.',
-            requests: [
+            user_id: 1,
+            share_data: [
                 {
-                    type: "email",
-                    optional: false,
-                    validated_by: [
-                        {
-                            site: "github.com",
-                            address: 0xDEADBEEF
-                        },
-                        {
-                            site: "google.com",
-                            address: 0xCAFEBABE
-                        }
-                    ]
+                    key: 'email',
+                    subject: 'public_key',
+                    data: 'test@epicauth.org',
+                    revocation_ref: '123456789',
+                    verifier_id: 0xDEADBEEF,
+                    verifier_signature: 'AFEA234253235'
                 },
                 {
-                    type: "phone",
-                    optional: true,
-                    validated_by: [
-                        {
-                            site: "github.com",
-                            address: 0xDEADCAFE
-                        },
-                        {
-                            site: "google.com",
-                            address: 0xCAFEBABE
-                        }
-                    ]
-                }
+                    key: 'phone',
+                    subject: 'public_key',
+                    data: '+123456789',
+                    revocation_ref: '123456789',
+                    verifier_id: 'facebook.com',
+                    verifier_signature: 'ASDAFGARASASD2342346'
+                },
             ]
-        }
+        }.with_indifferent_access
       end
     end
   end
