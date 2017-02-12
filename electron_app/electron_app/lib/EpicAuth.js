@@ -95,14 +95,8 @@ class EpicAuthFactory {
         var account1 = web3.eth.accounts[0]
         var account2 = web3.eth.accounts[1]
         var verification_account = web3.eth.accounts[3]
-        let id1 = IdentityFactory.new({
-            from: account1,
-            gas: 1000000
-        });
-        let id2 = IdentityFactory.new({
-            from: account2,
-            gas: 1000000
-        });
+        let id1 = IdentityFactory.new({ from: account1, gas: 1000000 });
+        let id2 = IdentityFactory.new({ from: account2, gas: 1000000 });
         let createAccountsUser1 = this.createSomeAccounts(id1.address,verification_account)
         let createAccountsUser2 = this.createSomeAccounts(id2.address,verification_account)
         return Promise.all([id1, id2, createAccountsUser1, createAccountsUser2])
