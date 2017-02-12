@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>EpicAuth</title>
+    <script type="text/javascript" src='https://code.jquery.com/jquery-3.1.1.min.js' ></script>
+    <style>
+    @font-face {
+  font-family: 'EpicAuth';
+  src: url('browau.ttf');
+}
+    body{
+        padding: 0;
+        margin:0;
+    }
+    .left {
+        width:40%;
+        text-align: right;
+        float:left;
+        background: #fff;
+        display: block;
+        vertical-align: right;
+         height:100vh;
+    }
+    .right {
+        width:60%;
+        float:left;
+        background: #009999;
+        display: block;
+         height:100vh;
+    }
+    #textholder{
+        font-family: 'EpicAuth';
+        position: absolute;
+        color:#fff;
+         text-transform: uppercase;
+
+    }
+
+
+    </style>
+
+</head>
+<body>
+<div class='left'>
+<img class='logo' src='logo.png' width="80%" />
+
+</div>
+
+<div class='right'>
+<span id='textholder'>
+entication
+</span>
+
+</div>
+<script type="text/javascript">
+function update() {
+     var logo = $('.logo')
+        var wh = $(window).height();
+        var lg = logo.height();
+        var mt = (wh / 2) - (lg/2);
+        console.log(wh, lg, mt)
+        logo.css('margin-top',  mt);
+
+        var textheight = ((wh / 2) + lg/2) - lg*0.09 - $('#textholder').height()
+        $('#textholder').css('margin-top',  textheight);
+        $('#textholder').css('font-size', lg*0.50 + "px" );
+}
+    $(window).resize(function() {
+       update()
+    });
+    $(function (){
+        setTimeout('update()', 100)
+        setTimeout('update()', 500)
+        setTimeout('update()', 1000)
+        setTimeout('update()', 2000)
+        update()
+        var pos = 0;
+        var strs = ["orization", "orization", "identification", "entificization"]
+        setInterval(function (){
+            $('#textholder').fadeOut()
+            pos++;
+            $('#textholder').text(strs[pos % strs.length])
+            $('#textholder').fadeIn()
+
+        }, 3000);
+    })
+</script>
+
+
+</body>
+</html>
