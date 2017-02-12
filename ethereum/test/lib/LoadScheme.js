@@ -1,6 +1,6 @@
 
 
-function LoadScheme(demands){
+function LoadScheme(){
     let demands = {
         "request": [
             {

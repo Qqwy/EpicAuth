@@ -20,6 +20,8 @@
     "electron": "^1.4.1"
   },
   "dependencies": {
-    "node": "^0.0.0"
+    "electron-json-storage": "^3.0.1",
+    "truffle-contract": "^1.1.10",
+    "web3": "^0.18.2"
   }
 }

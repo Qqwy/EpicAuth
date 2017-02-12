@@ -1,0 +1,40 @@
+{
+  "contract_name": "TestContract",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "getMe",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "me",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "payable": false,
+      "type": "constructor"
+    }
+  ],
+  "unlinked_binary": "0x606060405234610000575b60008054600160a060020a03191633600160a060020a03161790555b5b60c3806100356000396000f300606060405263ffffffff60e060020a600035041663c11e1ff38114602c578063cb12b48f146052575b6000565b3460005760366078565b60408051600160a060020a039092168252519081900360200190f35b3460005760366088565b60408051600160a060020a039092168252519081900360200190f35b600054600160a060020a03165b90565b600054600160a060020a0316815600a165627a7a723058204327c48467ac12c94f10963c05fa4b0789d2b88c378fcb23628c952f22567b330029",
+  "networks": {},
+  "schema_version": "0.0.5",
+  "updated_at": 1486755264065
+}
