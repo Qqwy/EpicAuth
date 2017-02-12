@@ -15,6 +15,7 @@ class HookController < ApplicationController
   end
 
   def check_demand_response
+    puts params.inspect
     # response = params[:response]
     response = {
         user_id: 1,

@@ -52,16 +52,16 @@ $(function(){
         $('.cancel_button').click(function(){
             window.close();
         });
-        $("form").submit(function(){
+        $("form.requests_form").submit(function(event){
+            event.preventDefault();
             console.log(request_json.intermediate_url);
-            $.post(request_json.intermediate_url, function (postResult){
+            $.post(request_json.intermediate_url, $(this).serialize(), function (postResult){
 
                 console.log("TODO: Retrieve token as answer");
                 handleStorageOfToken(postResult.token);
                 submitRequestResponse(request_json.return_url, postResult.token);
                 window.close();
             });
-            return false;
         });
         $(".active.dimmer").removeClass("active");
     });
