@@ -15,38 +15,41 @@ module EpicAuth
 
       def self.standard_demands
         {
-            title: 'Login to Bithug website',
-            explanation: 'You you want to use our service, please allow us to send you spam on your mail and maybe call you on inpropriate times.',
-            requests: [
+          return_url: "http://localhost:3000/hooks/token/$token",
+          intermediate_url: "http://localhost:3000/hooks/check_demand_response/",
+          error_url: "http://localhost:3000/error/",
+          title: 'Login to Bithug website',
+          explanation: 'You you want to use our service, please allow us to send you spam on your mail and maybe call you on inpropriate times.',
+          requests: [
+            {
+              type: "email",
+              optional: false,
+              validated_by: [
                 {
-                    type: "email",
-                    optional: false,
-                    validated_by: [
-                        {
-                            site: "github.com",
-                            address: 0xDEADBEEF
-                        },
-                        {
-                            site: "google.com",
-                            address: 0xCAFEBABE
-                        }
-                    ]
+                  site: "github.com",
+                  address: 0xDEADBEEF
                 },
                 {
-                    type: "phone",
-                    optional: true,
-                    validated_by: [
-                        {
-                            site: "github.com",
-                            address: 0xDEADCAFE
-                        },
-                        {
-                            site: "google.com",
-                            address: 0xCAFEBABE
-                        }
-                    ]
+                  site: "google.com",
+                  address: 0xCAFEBABE
                 }
-            ]
+              ]
+            },
+            {
+              type: "phone",
+              optional: true,
+              validated_by: [
+                {
+                  site: "github.com",
+                  address: 0xDEADCAFE
+                },
+                {
+                  site: "google.com",
+                  address: 0xCAFEBABE
+                }
+              ]
+            }
+          ]
         }
       end
     end
