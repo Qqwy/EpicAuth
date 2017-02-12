@@ -45,30 +45,6 @@ class EpicAuth {
 
 
 
-$(function() {
-    let ef = new EpicAuthFactory();
-    let accounts_promise = ef.getTestAccounts()
-    accounts_promise.then(accounts => {
-        let first_account = accounts[0]
-        first_account.checkService("wicked")
-            .then(function(result) {
-                console.log("Is the service valid? : " + result);
-            });
-
-        first_account.storeOnBlockChain("wicked")
-            .then(function(result) {
-                console.log("Is the key stored on the blockchain? : " + result);
-            });
-
-        first_account.getItemsFilteredBy("email")
-            .then(function(result) {
-                console.log("avaialble emails : ", result);
-            });
-    })
-
-
-
-})
 
 
 var provider = new Web3.providers.HttpProvider("http://localhost:8545");
@@ -151,13 +127,3 @@ class EpicAuthFactory {
 }
 
 exports.factory = new EpicAuthFactory
-    // // Write
-    // storage.set('foobar', { foo: 'bar' }).then(function() {
-
-//     // Read
-//     storage.get('foobar').then(function(object) {
-//         console.log(object.foo);
-//         // will print "bar"
-//     });
-
-// });
