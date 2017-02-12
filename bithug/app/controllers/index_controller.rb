@@ -8,6 +8,8 @@ class IndexController < ApplicationController
 
   def login_redirect_to_app
     demands = Base64.encode64({
+                                  return_url: "http://localhost:3000/hooks/token/$token",
+                                  error_url: "http://localhost:3000/error/",
                                   title: 'Login to Bithug website',
                                   explanation: 'You you want to use our service, please allow us to send you spam on your mail and maybe call you on inpropriate times.',
                                   requests: [

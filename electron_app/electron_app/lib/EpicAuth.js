@@ -5,6 +5,9 @@ class EpicAuth {
         this.profile = profile;
     }
 
+    getName(){
+        return this.profile.name;
+    }
 
     checkService(service) {
         console.log("TODO: simulate check service");
@@ -19,13 +22,21 @@ class EpicAuth {
             then: callback => callback(true)
         };
     }
+    getTypes() {
+        console.log("TODO: simulate storage on blockchain");
+        this.profile.verified_data_chain
+           .map(data_object => data_object.key).unique()
+        return {
+            then: callback => callback(types)
+        };
+    }
 
-    getAvailableTypes(type) {
+    getItemsFilteredBy(type) {
         console.log("TODO: getting avaialble types for type " + type);
         return {
             then: callback => {
                 let result = this.profile.verified_data_chain
-                    .filter(a => a.key == type)
+                    .filter(data_object => data_object.key == type)
                 callback(result);
             }
         };
@@ -49,7 +60,7 @@ $(function() {
                 console.log("Is the key stored on the blockchain? : " + result);
             });
 
-        first_account.getAvailableTypes("email")
+        first_account.getItemsFilteredBy("email")
             .then(function(result) {
                 console.log("avaialble emails : ", result);
             });
@@ -94,13 +105,16 @@ class EpicAuthFactory {
             console.dir(id1)
          return [
             new EpicAuth({
+                name: "Satoshi",
                 account: id1.address,
-                verified_data_chain: [{
+                verified_data_chain: [
+                {
                     "key": "email",
                     "subject": id1.address,
                     "data": "test@epicauth.org",
                     "revocation_ref": veri1.address,
                     "verifier_id": verification_account,
+                    "verifier_label": "google.nl",
                     "verifier_signature": "AFEA234253235"
                 }, {
                     "key": "phone",
@@ -108,18 +122,57 @@ class EpicAuthFactory {
                     "data": "+312141516",
                     "revocation_ref": veri2.address,
                     "verifier_id": verification_account,
+                    "verifier_label": "digid.nl",
                     "verifier_signature": "AFEA234253235"
-                }]
+                },
+                {
+                    "key": "email",
+                    "subject": id1.address,
+                    "data": "test@epicauth.org",
+                    "revocation_ref": veri1.address,
+                    "verifier_id": verification_account,
+                    "verifier_label": "ing.nl",
+                    "verifier_signature": "AFEA234253235"
+                }, {
+                    "key": "phone",
+                    "subject": id1.address,
+                    "data": "+312141516",
+                    "revocation_ref": veri2.address,
+                    "verifier_id": verification_account,
+                    "verifier_label": "epicauth.org",
+                    "verifier_signature": "AFEA234253235"
+                },
+                {
+                    "key": "email",
+                    "subject": id1.address,
+                    "data": "test@epicauth.org",
+                    "revocation_ref": veri1.address,
+                    "verifier_id": verification_account,
+                    "verifier_label": "epicauth.org",
+                    "verifier_signature": "AFEA234253235"
+                }, {
+                    "key": "phone",
+                    "subject": id1.address,
+                    "data": "+312141516",
+                    "revocation_ref": veri2.address,
+                    "verifier_id": verification_account,
+                    "verifier_label": "digid.nl",
+                    "verifier_signature": "AFEA234253235"
+                },
+                ]
             }),
 
             new EpicAuth({
+                name: "Work Account",
                 account: id2,
-                verified_data_chain: [{
+                verified_data_chain: [
+                {
                     "key": "email",
                     "subject": id2.address,
                     "data": "test2@epicauth.org",
                     "revocation_ref": veri3.address,
                     "verifier_id": verification_account,
+                    "verifier_label": "github.com",
                     "verifier_signature": "AFEA234253235"
                 }, {
                     "key": "phone",
@@ -127,13 +180,51 @@ class EpicAuthFactory {
                     "data": "+100001337",
                     "revocation_ref": veri4.address,
                     "verifier_id": verification_account,
+                    "verifier_label": "epicauth.org",
                     "verifier_signature": "AFEA234253235"
-                }]
+                },
+                {
+                    "key": "email",
+                    "subject": id2.address,
+                    "data": "test2@epicauth.org",
+                    "revocation_ref": veri3.address,
+                    "verifier_id": verification_account,
+                    "verifier_label": "github.com",
+                    "verifier_signature": "AFEA234253235"
+                }, {
+                    "key": "phone",
+                    "subject": id2.address,
+                    "data": "+100001337",
+                    "revocation_ref": veri4.address,
+                    "verifier_id": verification_account,
+                    "verifier_label": "facebook.com",
+                    "verifier_signature": "AFEA234253235"
+                },
+                {
+                    "key": "email",
+                    "subject": id2.address,
+                    "data": "test2@epicauth.org",
+                    "revocation_ref": veri3.address,
+                    "verifier_id": verification_account,
+                    "verifier_label": "epicauth.org",
+                    "verifier_signature": "AFEA234253235"
+                }, {
+                    "key": "phone",
+                    "subject": id2.address,
+                    "data": "+100001337",
+                    "revocation_ref": veri4.address,
+                    "verifier_id": verification_account,
+                    "verifier_label": "facebook.com",
+                    "verifier_signature": "AFEA234253235"
+                },
+                ]
             }),
         ]
         })
     }
 }
+
+exports.factory = new EpicAuthFactory
 // // Write
 // storage.set('foobar', { foo: 'bar' }).then(function() {
 
