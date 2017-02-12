@@ -64,7 +64,7 @@ function update() {
 
         var textheight = ((wh / 2) + lg/2) - lg*0.09 - $('#textholder').height()
         $('#textholder').css('margin-top',  textheight);
-        $('#textholder').css('font-size', lg*0.50 + "px" );
+        $('#textholder').css('font-size', lg*0.52 + "px" );
 }
     $(window).resize(function() {
        update()
@@ -78,10 +78,10 @@ function update() {
         var pos = 0;
         var strs = ["orization", "orization", "identification", "entificization"]
         setInterval(function (){
-            $('#textholder').fadeOut(function(){
+            $('#textholder').slideUp(function(){
                 pos++;
                 $('#textholder').text(strs[pos % strs.length])
-                $('#textholder').fadeIn()
+                $('#textholder').slideDown()
             })
         }, 3000);
     })
