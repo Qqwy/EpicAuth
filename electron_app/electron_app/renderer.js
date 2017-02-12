@@ -22,7 +22,7 @@ $(function(){
             url = arguments[3];
             console.log("Login Request Mode!");
         } else {
-            url = "epicauth://eyJyZXR1cm5fdXJsIjoiaHR0cDovL2xvY2FsaG9zdDozMDAwL2hvb2tzL3Rva2VuLyR0b2tlbiIsImVycm9yX3VybCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMC9lcnJvci8iLCJ0aXRsZSI6IkxvZ2luIHRvIEJpdGh1ZyB3ZWJzaXRlIiwiZXhwbGFuYXRpb24iOiJZb3UgeW91IHdhbnQgdG8gdXNlIG91ciBzZXJ2aWNlLCBwbGVhc2UgYWxsb3cgdXMgdG8gc2VuZCB5b3Ugc3BhbSBvbiB5b3VyIG1haWwgYW5kIG1heWJlIGNhbGwgeW91IG9uIGlucHJvcHJpYXRlIHRpbWVzLiIsInJlcXVlc3RzIjpbeyJ0eXBlIjoiZW1haWwiLCJvcHRpb25hbCI6ZmFsc2UsInZhbGlkYXRlZF9ieSI6W3sic2l0ZSI6ImdpdGh1Yi5jb20iLCJhZGRyZXNzIjozNzM1OTI4NTU5fSx7InNpdGUiOiJnb29nbGUuY29tIiwiYWRkcmVzcyI6MzQwNTY5MTU4Mn1dfSx7InR5cGUiOiJwaG9uZSIsIm9wdGlvbmFsIjp0cnVlLCJ2YWxpZGF0ZWRfYnkiOlt7InNpdGUiOiJnaXRodWIuY29tIiwiYWRkcmVzcyI6MzczNTkzMTY0Nn0seyJzaXRlIjoiZ29vZ2xlLmNvbSIsImFkZHJlc3MiOjM0MDU2OTE1ODJ9XX1dfQ==";
+            url = "epicauth://eyJyZXR1cm5fdXJsIjoiaHR0cDovL2xvY2FsaG9zdDozMDAwL2hvb2tzL3Rva2VuLyR0b2tlbiIsImludGVybWVkaWF0ZV91cmwiOiJodHRwOi8vbG9jYWxob3N0OjMwMDAvaG9va3MvY2hlY2tfZGVtYW5kX3Jlc3BvbnNlLyIsImVycm9yX3VybCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMC9lcnJvci8iLCJ0aXRsZSI6IkxvZ2luIHRvIEJpdGh1ZyB3ZWJzaXRlIiwiZXhwbGFuYXRpb24iOiJZb3UgeW91IHdhbnQgdG8gdXNlIG91ciBzZXJ2aWNlLCBwbGVhc2UgYWxsb3cgdXMgdG8gc2VuZCB5b3Ugc3BhbSBvbiB5b3VyIG1haWwgYW5kIG1heWJlIGNhbGwgeW91IG9uIGlucHJvcHJpYXRlIHRpbWVzLiIsInJlcXVlc3RzIjpbeyJ0eXBlIjoiZW1haWwiLCJvcHRpb25hbCI6ZmFsc2UsInZhbGlkYXRlZF9ieSI6W3sic2l0ZSI6ImVwaWNhdXRoLm9yZyIsImFkZHJlc3MiOjM3MzU5Mjg1NTl9LHsic2l0ZSI6ImdpdGh1Yi5jb20iLCJhZGRyZXNzIjozNzM1OTI4NTU5fSx7InNpdGUiOiJnb29nbGUuY29tIiwiYWRkcmVzcyI6MzQwNTY5MTU4Mn1dfSx7InR5cGUiOiJwaG9uZSIsIm9wdGlvbmFsIjp0cnVlLCJ2YWxpZGF0ZWRfYnkiOlt7InNpdGUiOiJnaXRodWIuY29tIiwiYWRkcmVzcyI6MzczNTkzMTY0Nn0seyJzaXRlIjoiZXBpY2F1dGgub3JnIiwiYWRkcmVzcyI6MzczNTkzMTY0Nn0seyJzaXRlIjoiZ29vZ2xlLmNvbSIsImFkZHJlc3MiOjM0MDU2OTE1ODJ9XX1dfQ==";
             // Run general mode.
             console.log("General Mode!", arguments.length, arguments[0], arguments[1]);
         }
@@ -47,7 +47,13 @@ $(function(){
 
         console.log("TEST");
         $(".ui.tabular.menu .item").tab();
-        $(".ui.dropdown").dropdown({direction: 'downward'});
+        $(".ui.dropdown").dropdown({
+            direction: 'downward',
+            onChange: function(value, text, $selectedItem) {
+                console.log("testst")
+                validateForm();
+            }
+        });
 
         $('.cancel_button').click(function(){
             window.close();
@@ -55,7 +61,10 @@ $(function(){
         $("form.requests_form").submit(function(event){
             event.preventDefault();
             console.log(request_json.intermediate_url);
-            $.post(request_json.intermediate_url, $(this).serialize(), function (postResult){
+            let value_indexes = $('.requests_form .dropdown').dropdown("get item")
+            let json_objects = value_indexes.map(datasnippet => $(datasnippet).data('json_object'))
+            let post_data = {postdata: JSON.stringify(json_objects)};
+            $.post(request_json.intermediate_url,post_data , function (postResult){
 
                 console.log("TODO: Retrieve token as answer");
                 handleStorageOfToken(postResult.token);
@@ -69,6 +78,7 @@ $(function(){
 
 
 });
+
 
 function handleStorageOfToken(token){
     var do_save = confirm("Do you want to save this token to your personal blockchain wallet?");
@@ -92,9 +102,9 @@ function renderRequestJSON(request_json, current_user){
     $('.custom_object').remove();
     $('.request_explanation').html(request_json.explanation);
     $('.service_name').html(request_json.title);
-    console.log(request_json.requests);
     request_json.requests.forEach(r => fillInSingleRequest(r, current_user));
     $('#form_details').html("");
+    validateForm();
 
 
 }
@@ -111,18 +121,45 @@ function fillInSingleRequest(request, current_user){
         let optional = request.optional ? " (optional)" : "";
         $("label", field).html(type + optional);
         $("i", field).addClass(requestIconClass(type));
-        items.forEach(function(datasnippet){
+        $(".menu", field).append("<div class='item' data-value='-1'>Don't select anything</div>");
+        items.forEach(function(datasnippet, index){
             let validated = trusted.indexOf(datasnippet.verifier_label) >= 0;
             let icon = validated ? "<i class='checkmark icon'></i>" : "<i class='warning sign icon'></i>";
-            $(".menu", field).append("<div class='item' value='" + datasnippet.data + "'>" + icon + datasnippet.data  +" (" + datasnippet.verifier_label  +")</div>");
+            let object = $("<div class='item' data-value='" + index + "'>" + icon + datasnippet.data  +" (" + datasnippet.verifier_label  +")</div>")
+            object.data('valid', validated)
+            object.data('json_object', datasnippet)
+            $(".menu", field).append(object);
         });
         field.addClass("custom_object");
         $(".requests_form").prepend(field);
-         $(".ui.tabular.menu .item").tab();
-        $(".ui.dropdown").dropdown({direction: 'downward'});
+        $(".ui.tabular.menu .item").tab();
+        $(".ui.dropdown").dropdown({
+            direction: 'downward',
+            onChange: function(value, text, $selectedItem) {
+                console.log("testst")
+                validateForm();
+            }
+
+        });
         console.log(field);
     });
 
+}
+function validateForm(){
+    let value_indexes = $('.requests_form .dropdown').dropdown("get item")
+    console.log(value_indexes)
+    let json_objects = value_indexes.map(datasnippet => $(datasnippet).data('json_object'))
+
+    let is_valid = value_indexes
+    .map(datasnippet => $(datasnippet).data('valid'))
+    .every(a => a == true)
+    console.log(json_objects)
+    console.log(is_valid)
+    if(is_valid){
+        $('.submit_button').prop("disabled", false);
+    }else{
+        $('.submit_button').prop("disabled", true);
+    }
 }
 
 function requestIconClass(request_type){
