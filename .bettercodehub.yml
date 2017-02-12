@@ -1,6 +1,10 @@
 exclude:
 - /browser_extension/_deps/Semantic-UI-CSS-master/.*
+- /*.haml # Parsed incorrectly by Better Code Hub right now.
+- /bithug/config/environments/*.rb # Pre-generated config files with lots of (commented) constants and explanatory comments.
 component_depth: 1
 languages:
 - javascript
 - ruby
+- html
+- serenity
