@@ -49,15 +49,39 @@ function renderRequestJSON(request_json){
     $('.request_explanation').html(request_json.explanation);
     $('.service_name').html(request_json.title);
     console.log(request_json.requests);
-    request_json.requests.forEach(function(request){
-        // TODO: Check if I have this request thingy.
-        var field = $(".hidden.field.placeholder").clone();
-        field.removeClass("placeholder");
-        $("label", field).html(request.type);
-        $("i", field).addClass(requestIconClass(request.type));
-        console.log(field);
-        $(".requests_form").prepend(field);
+    request_json.requests.forEach(fillInSingleRequest);
+}
+
+function fillInSingleRequest(request){
+    // TODO: Check if I have this request thingy.
+    var field = $(".hidden.field.placeholder").clone();
+    field.removeClass("placeholder");
+    $("label", field).html(request.type);
+    $("i", field).addClass(requestIconClass(request.type));
+    console.log(field);
+
+    var stub_data = [{
+        "key": "email",
+        "subject": id1.address,
+        "data": "test@epicauth.org",
+        "revocation_ref": veri1.address,
+        "verifier_id": verification_account,
+        "verifier_signature": "AFEA234253235"
+    }, {
+        "key": "phone",
+        "subject": id1.address,
+        "data": "+312141516",
+        "revocation_ref": veri2.address,
+        "verifier_id": verification_account,
+        "verifier_signature": "AFEA234253235"
+    }];
+    stub_data.forEach(function(datasnippet){
+        $(".menu", field).append("<div class='item' value='" + datasnipppet.data + "'>" +  +"</div>");
     });
+
+    $(".requests_form").prepend(field);
+    console.log(field);
+
 }
 
 function requestIconClass(request_type){
