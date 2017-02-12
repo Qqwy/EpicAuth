@@ -4,7 +4,7 @@
 
 // var height = document.body.offsetHeight;
 // self.resizeTo(500, height);
-arguments = [];
+
 $(function(){
     console.log("TEST");
     $(".ui.tabular.menu .item").tab();
@@ -21,6 +21,10 @@ $(function(){
         var request_json = parseEpicAuthRequestURI(arguments[3]);
         console.log("Request json:", request_json);
         renderRequestJSON(request_json);
+
+        $('.cancel_button').click(function(){
+            window.close();
+        });
     } else {
         // Run general mode.
         console.log("General Mode!", arguments.length, arguments[0], arguments[1])
