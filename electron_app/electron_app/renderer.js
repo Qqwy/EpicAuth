@@ -57,25 +57,20 @@ $(function(){
             $.post(request_json.intermediate_url, function (postResult){
 
                 console.log("TODO: Retrieve token as answer")
-                handleStorageOfToken()
-                submitRequestResponse(request_json.return_url);
+                handleStorageOfToken(request-json.token)
+                submitRequestResponse(request_json.return_url, request_json.token);
                 window.close();
             })
-
-
-
         });
-
-
     })
 
 
 
 });
 
-function handleStorageOfToken(){
+function handleStorageOfToken(token){
     var do_save = confirm("Do you want to save this token to your personal blockchain wallet?")
-
+    console.log("TODO: Actually save token");
     return {then: (callback) => callback(true)}
 }
 
@@ -88,6 +83,7 @@ function parseEpicAuthRequestURI(raw_uri){
 }
 
 function renderRequestJSON(request_json, current_user){
+    console.log(request_json);
     console.log(current_user.getName());
     // $(".form_elements").html("")
     $('#identity').html(current_user.getName());

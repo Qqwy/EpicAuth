@@ -1,8 +1,9 @@
-Logger.debug "TODO: Check of data dezelfde is als gevraagde data (correct antwoord op demand)"
-Logger.debug "TODO:Check signatures van data snippets (ethereum gem)"
+Rails.logger.debug "TODO: Check of data dezelfde is als gevraagde data (correct antwoord op demand)"
+Rails.logger.debug "TODO:Check signatures van data snippets (ethereum gem)"
 require './lib/epic_auth_service.rb'
 
 class HookController < ApplicationController
+  skip_before_filter :verify_authenticity_token, only: :check_demand_response
 
   def token
     token = EpicAuth::Service::AuthenticationToken.decrypt(params[:token])
@@ -59,7 +60,7 @@ class HookController < ApplicationController
       demand_responses << demand_response
     end
 
-    Logger.debug "TODO: Ethereum verification"
+    Rails.logger.debug "TODO: Ethereum verification"
     config.successful_response_callback
 
     render json: { token: EpicAuth::Service::AuthenticationToken.new(response[:user_id]).encrypt}.to_json
