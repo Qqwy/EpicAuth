@@ -1,4 +1,5 @@
 require 'test_helper'
+require './lib/epic_auth_service'
 
 class DemandResponseFlowTest < ActionDispatch::IntegrationTest
   # test "the truth" do
@@ -8,7 +9,7 @@ class DemandResponseFlowTest < ActionDispatch::IntegrationTest
     get '/index/login_redirect_to_app'
     assert_response 302
 
-    post '/hooks/check_demand_response', {params: {format: :json}}
+    post '/hooks/check_demand_response', {params: {response: EpicAuth::Service::Config.standard_response, format: :json}}
     token = JSON.parse(response.body)["token"]
     assert_response :success
 

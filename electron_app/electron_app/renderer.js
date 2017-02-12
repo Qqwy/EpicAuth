@@ -19,16 +19,16 @@ $(function(){
         var url = "";
         if (arguments.length > 2 && arguments[2] == '--'){
             // Run login-request mode.
+            console.log("RL TEST MODE");
             url = arguments[3];
-            console.log("Login Request Mode!");
         } else {
+            console.log("DEBUG MODE");
             url = "epicauth://eyJyZXR1cm5fdXJsIjoiaHR0cDovL2xvY2FsaG9zdDozMDAwL2hvb2tzL3Rva2VuLyR0b2tlbiIsImludGVybWVkaWF0ZV91cmwiOiJodHRwOi8vbG9jYWxob3N0OjMwMDAvaG9va3MvY2hlY2tfZGVtYW5kX3Jlc3BvbnNlLyIsImVycm9yX3VybCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMC9lcnJvci8iLCJ0aXRsZSI6IkxvZ2luIHRvIEJpdGh1ZyB3ZWJzaXRlIiwiZXhwbGFuYXRpb24iOiJZb3UgeW91IHdhbnQgdG8gdXNlIG91ciBzZXJ2aWNlLCBwbGVhc2UgYWxsb3cgdXMgdG8gc2VuZCB5b3Ugc3BhbSBvbiB5b3VyIG1haWwgYW5kIG1heWJlIGNhbGwgeW91IG9uIGlucHJvcHJpYXRlIHRpbWVzLiIsInJlcXVlc3RzIjpbeyJ0eXBlIjoiZW1haWwiLCJvcHRpb25hbCI6ZmFsc2UsInZhbGlkYXRlZF9ieSI6W3sic2l0ZSI6ImVwaWNhdXRoLm9yZyIsImFkZHJlc3MiOjM3MzU5Mjg1NTl9LHsic2l0ZSI6ImdpdGh1Yi5jb20iLCJhZGRyZXNzIjozNzM1OTI4NTU5fSx7InNpdGUiOiJnb29nbGUuY29tIiwiYWRkcmVzcyI6MzQwNTY5MTU4Mn1dfSx7InR5cGUiOiJwaG9uZSIsIm9wdGlvbmFsIjp0cnVlLCJ2YWxpZGF0ZWRfYnkiOlt7InNpdGUiOiJnaXRodWIuY29tIiwiYWRkcmVzcyI6MzczNTkzMTY0Nn0seyJzaXRlIjoiZXBpY2F1dGgub3JnIiwiYWRkcmVzcyI6MzczNTkzMTY0Nn0seyJzaXRlIjoiZ29vZ2xlLmNvbSIsImFkZHJlc3MiOjM0MDU2OTE1ODJ9XX1dfQ==";
             // Run general mode.
-            console.log("General Mode!", arguments.length, arguments[0], arguments[1]);
         }
         var request_json = parseEpicAuthRequestURI(url);
         console.log("Request json:", request_json);
-        renderRequestJSON(request_json, listUsers[0]);
+        renderNewForm(request_json, listUsers[0]);
 
         $('#user_accounts').html("");
         $(listUsers).each(function (i, u){
@@ -40,7 +40,7 @@ $(function(){
              .click(function (){
                  $(".specialtabs").removeClass("active");
                  $(this).addClass("active");
-                 renderRequestJSON(request_json, listUsers[i]);
+                 renderNewForm(request_json, listUsers[i]);
              });
             $('#user_accounts').append(new_object);
         });
@@ -94,7 +94,7 @@ function parseEpicAuthRequestURI(raw_uri){
     return json;
 }
 
-function renderRequestJSON(request_json, current_user){
+function renderNewForm(request_json, current_user){
     console.log(request_json);
     console.log(current_user.getName());
     // $(".form_elements").html("")
@@ -102,34 +102,30 @@ function renderRequestJSON(request_json, current_user){
     $('.custom_object').remove();
     $('.request_explanation').html(request_json.explanation);
     $('.service_name').html(request_json.title);
-    request_json.requests.forEach(r => fillInSingleRequest(r, current_user));
+    request_json.requests.forEach(r => renderNewFormElement(r, current_user));
     $('#form_details').html("");
     validateForm();
 
 
 }
 
-function fillInSingleRequest(request, current_user){
-    let type = request.type;
+function renderNewFormElement(request, current_user){
+
+    current_user.getItemsFilteredBy(request.type)
+    .then(items => renderPicker(items, request.type, request));
+
+}
+
+function renderPicker(items, type, request){
+
     let trusted = request.validated_by.map(a => a.site);
-    console.log(trusted);
-    current_user.getItemsFilteredBy(type)
-    .then(items =>{
-        // TODO: Check if I have this request thingy.
-        var field = $(".hidden.field.placeholder").clone();
+    var field = $(".hidden.field.placeholder").clone();
         field.removeClass("placeholder");
         let optional = request.optional ? " (optional)" : "";
         $("label", field).html(type + optional);
         $("i", field).addClass(requestIconClass(type));
         $(".menu", field).append("<div class='item' data-value='-1'>Don't select anything</div>");
-        items.forEach(function(datasnippet, index){
-            let validated = trusted.indexOf(datasnippet.verifier_label) >= 0;
-            let icon = validated ? "<i class='checkmark icon'></i>" : "<i class='warning sign icon'></i>";
-            let object = $("<div class='item' data-value='" + index + "'>" + icon + datasnippet.data  +" (" + datasnippet.verifier_label  +")</div>")
-            object.data('valid', validated)
-            object.data('json_object', datasnippet)
-            $(".menu", field).append(object);
-        });
+        renderItemsInPicker(field, items, trusted)
         field.addClass("custom_object");
         $(".requests_form").prepend(field);
         $(".ui.tabular.menu .item").tab();
@@ -141,10 +137,19 @@ function fillInSingleRequest(request, current_user){
             }
 
         });
-        console.log(field);
-    });
-
 }
+
+function renderItemsInPicker(field, items, trusted){
+    items.forEach(function(datasnippet, index){
+            let validated = trusted.indexOf(datasnippet.verifier_label) >= 0;
+            let icon = validated ? "<i class='checkmark icon'></i>" : "<i class='warning sign icon'></i>";
+            let object = $("<div class='item' data-value='" + index + "'>" + icon + datasnippet.data  +" (" + datasnippet.verifier_label  +")</div>")
+            object.data('valid', validated)
+            object.data('json_object', datasnippet)
+            $(".menu", field).append(object);
+        });
+}
+
 function validateForm(){
     let value_indexes = $('.requests_form .dropdown').dropdown("get item")
     console.log(value_indexes)
@@ -180,3 +185,11 @@ function submitRequestResponse(url, token){
     let tokenized_url = url.replace("$token", token)
     shell.openExternal(tokenized_url);
 }
+
+document.addEventListener("keydown", function (e) {
+    if (e.which === 123) {
+        require('remote').getCurrentWindow().toggleDevTools();
+    } else if (e.which === 116) {
+        location.reload();
+    }
+});
