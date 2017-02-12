@@ -52,7 +52,7 @@ $(function(){
         $('.cancel_button').click(function(){
             window.close();
         });
-        $(".submit_button").click(function(){
+        $("form").submit(function(){
             console.log(request_json.intermediate_url)
             $.post(request_json.intermediate_url, function (postResult){
 
@@ -61,6 +61,7 @@ $(function(){
                 submitRequestResponse(request_json.return_url, postResult.token);
                 window.close();
             })
+            return false;
         });
     })
 
