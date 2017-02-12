@@ -132,11 +132,7 @@ class EpicAuthFactory {
             }),
         ]
         })
-
-
-
     }
-
 }
 // // Write
 // storage.set('foobar', { foo: 'bar' }).then(function() {
