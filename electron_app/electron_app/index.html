@@ -14,6 +14,7 @@
      require('./renderer.js');
      require('./lib/EpicAuth.js');
      require('./lib/EpicAuthFactory.js');
+     require('./lib/RenderRequestForm.js');
     </script>
     <script>if (window.module) module = window.module;</script>
 
@@ -33,6 +34,9 @@
                 </div>
                 what data do you want to share with
                 <strong class="service_name">BitHug</strong>?
+                <p class="request_explanation">
+                    ...
+                </p>
             </div>
         </div>
 
@@ -154,40 +158,7 @@
 
             <div class="ui one column centered grid">
                 <div class="column">
-                    <div class="ui form">
-                        <div class="field">
-                            <label for="">E-mail</label>
-                            <div class="ui fluid dropdown labeled icon button">
-                                <i class="mail outline icon"></i>
-                                <span class="text">Choose...</span>
-                                <div class="menu">
-                                    <div class="item">john@doe.com <em>(GitHub.com)</em></div>
-                                    <div class="item">joe@satrani.com <em>(Rettiwt.com)</em></div>
-                                    <div class="item">satoshi.nakamoto@foo.com <em>(GitHub.com)</em></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label for="">Phone Number</label>
-                            <div class="ui fluid dropdown labeled icon button">
-                                <i class="phone outline icon"></i>
-                                <span class="text">Choose...</span>
-                                <div class="menu">
-                                    <div class="item">+316-20839234 <em>(TMobile)</em></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label for="">Username</label>
-                            <div class="ui fluid dropdown labeled icon button">
-                                <i class="user outline icon"></i>
-                                <span class="text">Choose...</span>
-                                <div class="menu">
-                                    <div class="item">Jhawnny <em>(Self-Verified)</em></div>
-                                </div>
-                            </div>
-                        </div>
-
+                    <div class="ui form requests_form">
                         <div class="field">
                             <button class="ui left floated basic button">
                                 Cancel
@@ -205,6 +176,18 @@
 
 
     </div>
+    </div>
+
+    <div class="hidden field placeholder">
+        <div class="field">
+            <label for="">E-mail</label>
+            <div class="ui fluid dropdown labeled icon button">
+                <i class=""></i>
+                <span class="text">Choose...</span>
+                <div class="menu">
+                </div>
+            </div>
+        </div>
     </div>
 
   </body>

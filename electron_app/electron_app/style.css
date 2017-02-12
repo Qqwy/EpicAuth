@@ -1,3 +1,12 @@
 img.image.logo{
     margin: -10%;
 }
+
+
+.placeholder {
+    display: none;
+}
+
+.ui.form .field>label{
+    text-transform: capitalize;
+}

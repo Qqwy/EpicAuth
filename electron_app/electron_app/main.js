@@ -11,7 +11,9 @@ const url = require('url')
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
+
 function createWindow () {
+global.sharedObject = {encoded_token: process.argv };
   // Create the browser window.
   mainWindow = new BrowserWindow({width: 800, height: 600})
 

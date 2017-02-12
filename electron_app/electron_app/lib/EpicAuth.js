@@ -27,14 +27,9 @@ class EpicAuth {
                 let result = this.profile.verified_data_chain
                     .filter(a => a.key == type)
                 callback(result);
-
             }
         };
-
     }
-
-
-
 }
 
 
