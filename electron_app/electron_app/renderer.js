@@ -57,8 +57,8 @@ $(function(){
             $.post(request_json.intermediate_url, function (postResult){
 
                 console.log("TODO: Retrieve token as answer")
-                handleStorageOfToken(request-json.token)
-                submitRequestResponse(request_json.return_url, request_json.token);
+                handleStorageOfToken(postResult.token)
+                submitRequestResponse(request_json.return_url, postResult.token);
                 window.close();
             })
         });
