@@ -22,7 +22,7 @@ $(function(){
             url = arguments[3];
             console.log("Login Request Mode!");
         } else {
-            url = "epicauth://eyJyZXR1cm5fdXJsIjoiaHR0cDovL2xvY2FsaG9zdDozMDAwL2hvb2tzL3Rva2VuLyR0b2tlbiIsImVycm9yX3VybCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMC9lcnJvci8iLCJ0aXRsZSI6IkxvZ2luIHRvIEJpdGh1ZyB3ZWJzaXRlIiwiZXhwbGFuYXRpb24iOiJZb3UgeW91IHdhbnQgdG8gdXNlIG91ciBzZXJ2aWNlLCBwbGVhc2UgYWxsb3cgdXMgdG8gc2VuZCB5b3Ugc3BhbSBvbiB5b3VyIG1haWwgYW5kIG1heWJlIGNhbGwgeW91IG9uIGlucHJvcHJpYXRlIHRpbWVzLiIsInJlcXVlc3RzIjpbeyJ0eXBlIjoiZW1haWwiLCJvcHRpb25hbCI6ZmFsc2UsInZhbGlkYXRlZF9ieSI6W3sic2l0ZSI6ImdpdGh1Yi5jb20iLCJhZGRyZXNzIjozNzM1OTI4NTU5fSx7InNpdGUiOiJnb29nbGUuY29tIiwiYWRkcmVzcyI6MzQwNTY5MTU4Mn1dfSx7InR5cGUiOiJwaG9uZSIsIm9wdGlvbmFsIjp0cnVlLCJ2YWxpZGF0ZWRfYnkiOlt7InNpdGUiOiJnaXRodWIuY29tIiwiYWRkcmVzcyI6MzczNTkzMTY0Nn0seyJzaXRlIjoiZ29vZ2xlLmNvbSIsImFkZHJlc3MiOjM0MDU2OTE1ODJ9XX1dfQ==";
+            url = "epicauth://eyJyZXR1cm5fdXJsIjoiaHR0cDovL2xvY2FsaG9zdDozMDAwL2hvb2tzL3Rva2VuLyR0b2tlbiIsImludGVybWVkaWF0ZV91cmwiOiJodHRwOi8vbG9jYWxob3N0OjMwMDAvaG9va3MvY2hlY2tfZGVtYW5kX3Jlc3BvbnNlLyIsImVycm9yX3VybCI6Imh0dHA6Ly9sb2NhbGhvc3Q6MzAwMC9lcnJvci8iLCJ0aXRsZSI6IkxvZ2luIHRvIEJpdGh1ZyB3ZWJzaXRlIiwiZXhwbGFuYXRpb24iOiJZb3UgeW91IHdhbnQgdG8gdXNlIG91ciBzZXJ2aWNlLCBwbGVhc2UgYWxsb3cgdXMgdG8gc2VuZCB5b3Ugc3BhbSBvbiB5b3VyIG1haWwgYW5kIG1heWJlIGNhbGwgeW91IG9uIGlucHJvcHJpYXRlIHRpbWVzLiIsInJlcXVlc3RzIjpbeyJ0eXBlIjoiZW1haWwiLCJvcHRpb25hbCI6ZmFsc2UsInZhbGlkYXRlZF9ieSI6W3sic2l0ZSI6ImVwaWNhdXRoLm9yZyIsImFkZHJlc3MiOjM3MzU5Mjg1NTl9LHsic2l0ZSI6ImdpdGh1Yi5jb20iLCJhZGRyZXNzIjozNzM1OTI4NTU5fSx7InNpdGUiOiJnb29nbGUuY29tIiwiYWRkcmVzcyI6MzQwNTY5MTU4Mn1dfSx7InR5cGUiOiJwaG9uZSIsIm9wdGlvbmFsIjp0cnVlLCJ2YWxpZGF0ZWRfYnkiOlt7InNpdGUiOiJnaXRodWIuY29tIiwiYWRkcmVzcyI6MzczNTkzMTY0Nn0seyJzaXRlIjoiZXBpY2F1dGgub3JnIiwiYWRkcmVzcyI6MzczNTkzMTY0Nn0seyJzaXRlIjoiZ29vZ2xlLmNvbSIsImFkZHJlc3MiOjM0MDU2OTE1ODJ9XX1dfQ==";
             // Run general mode.
             console.log("General Mode!", arguments.length, arguments[0], arguments[1]);
         }
@@ -61,7 +61,10 @@ $(function(){
         $("form.requests_form").submit(function(event){
             event.preventDefault();
             console.log(request_json.intermediate_url);
-            $.post(request_json.intermediate_url, $(this).serialize(), function (postResult){
+            let value_indexes = $('.requests_form .dropdown').dropdown("get item")
+            let json_objects = value_indexes.map(datasnippet => $(datasnippet).data('json_object'))
+            let post_data = {postdata: JSON.stringify(json_objects)};
+            $.post(request_json.intermediate_url,post_data , function (postResult){
 
                 console.log("TODO: Retrieve token as answer");
                 handleStorageOfToken(postResult.token);
