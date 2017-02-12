@@ -1,194 +1,82 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Hello World!</title>
-    <link rel="shortcut icon" href="icon.png"/> 
-    <link href="semantic-ui.min.css" rel="stylesheet"/>
-    <link href="style.css" rel="stylesheet"/>
+    <head>
+        <meta charset="UTF-8">
+        <title>Hello World!</title>
+        <link rel="shortcut icon" href="icon.png"/> 
+        <link href="semantic-ui.min.css" rel="stylesheet"/>
+        <link href="style.css" rel="stylesheet"/>
 
-    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
-    <script>
-     let jQuery = $ = require('./jquery-3.1.1.min.js');
-     require('./semantic-ui.min.js');
-     require('./renderer.js');
-     require('./lib/EpicAuth.js');
-     require('./lib/EpicAuthFactory.js');
-     require('./lib/RenderRequestForm.js');
-    </script>
-    <script>if (window.module) module = window.module;</script>
+        <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+        <script>
+         let jQuery = $ = require('./jquery-3.1.1.min.js');
+         require('./semantic-ui.min.js');
+         require('./renderer.js');
+         require('./lib/EpicAuth.js');
+         require('./lib/EpicAuthFactory.js');
+         require('./lib/RenderRequestForm.js');
+        </script>
+        <script>if (window.module) module = window.module;</script>
 
 
-  </head>
-  <body>
-    <div class="ui container">
-        <img class="centered ui image logo" alt="" src="images/LogoType-Transparent.png"/>
-        <p class="ui divider">
-        </p>
+    </head>
+    <body>
+        <div class="ui container">
+            <img class="centered ui image logo" alt="" src="images/LogoType-Transparent.png"/>
+            <p class="ui divider">
+            </p>
 
-        <div class="teal ui icon message">
-            <i class="privacy icon"></i>
-            <div class="content">
-                <div class="header">
-                    Choose Wisely
+            <div class="teal ui icon message">
+                <i class="privacy icon"></i>
+                <div class="content">
+                    <div class="header">
+                        Choose Wisely
+                    </div>
+                    what data do you want to share with
+                    <strong class="service_name">BitHug</strong>?
+                    <p class="request_explanation">
+                        ...
+                    </p>
                 </div>
-                what data do you want to share with
-                <strong class="service_name">BitHug</strong>?
-                <p class="request_explanation">
-                    ...
-                </p>
             </div>
-        </div>
 
-        <div class="ui top attached tabular menu">
-            <a class="item active" data-tab="first">Joe</a>
-            <a class="item" data-tab="second">Satoshi</a>
-            <a class="item" data-tab="third">CatLover99</a>
-        </div>
-        <div class="ui bottom attached tab segment active" data-tab="first">
-            <div class="ui one thin column centered grid">
-                <div class="column">
-                    Identity of
-                    <strong> Joe </strong>
-                    <div class="ui form">
-                        <div class="field">
-                            <label for="">E-mail</label>
-                            <div class="ui fluid dropdown labeled icon button">
-                                <i class="mail outline icon"></i>
-                                <span class="text">Choose...</span>
-                                <div class="menu">
-                                    <div class="item">john@doe.com <em>(GitHub.com)</em></div>
-                                    <div class="item">joe@satrani.com <em>(Rettiwt.com)</em></div>
-                                    <div class="item">satoshi.nakamoto@foo.com <em>(GitHub.com)</em></div>
-                                </div>
+            <div class="ui top attached tabular menu">
+                <a class="item active" data-tab="first">Satoshi</a>
+                <!-- <a class="item" data-tab="second">Satoshi</a> -->
+                <!-- <a class="item" data-tab="third">CatLover99</a> -->
+            </div>
+            <div class="ui bottom attached tab segment active" data-tab="first">
+                <div class="ui one thin column centered grid">
+                    <div class="column">
+                        Identity of
+                        <strong> Joe </strong>
+                        <div class="ui form requests_form">
+                            <div class="field">
+                                <button class="ui left floated basic button cancel_button">
+                                    Cancel
+                                </button>
+                                <button class="ui primary right floated button submit_button">
+                                    Share
+                                </button>
                             </div>
-                        </div>
-                        <div class="field">
-                            <label for="">Phone Number</label>
-                            <div class="ui fluid dropdown labeled icon button">
-                                <i class="phone outline icon"></i>
-                                <span class="text">Choose...</span>
-                                <div class="menu">
-                                    <div class="item">+316-20839234 <em>(TMobile)</em></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label for="">Username</label>
-                            <div class="ui fluid dropdown labeled icon button">
-                                <i class="user outline icon"></i>
-                                <span class="text">Choose...</span>
-                                <div class="menu">
-                                    <div class="item">Jhawnny <em>(Self-Verified)</em></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="field">
-                            <button class="ui left floated basic button cancel_button">
-                                Cancel
-                            </button>
-                            <button class="ui primary right floated button submit_button">
-                                Share
-                            </button>
                         </div>
                     </div>
                 </div>
+
             </div>
-
         </div>
-        <div class="ui bottom attached tab segment" data-tab="second">
-            Identity of
-            <strong> Satoshi </strong>
 
-            <div class="ui one column centered grid">
-                <div class="column">
-                    <div class="ui form">
-                        <div class="field">
-                            <label for="">E-mail</label>
-                            <div class="ui fluid dropdown labeled icon button">
-                                <i class="mail outline icon"></i>
-                                <span class="text">Choose...</span>
-                                <div class="menu">
-                                    <div class="item">john@doe.com <em>(GitHub.com)</em></div>
-                                    <div class="item">joe@satrani.com <em>(Rettiwt.com)</em></div>
-                                    <div class="item">satoshi.nakamoto@foo.com <em>(GitHub.com)</em></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label for="">Phone Number</label>
-                            <div class="ui fluid dropdown labeled icon button">
-                                <i class="phone outline icon"></i>
-                                <span class="text">Choose...</span>
-                                <div class="menu">
-                                    <div class="item">+316-20839234 <em>(TMobile)</em></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <label for="">Username</label>
-                            <div class="ui fluid dropdown labeled icon button">
-                                <i class="user outline icon"></i>
-                                <span class="text">Choose...</span>
-                                <div class="menu">
-                                    <div class="item">Jhawnny <em>(Self-Verified)</em></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="field">
-                            <button class="ui left floated basic button cancel_button">
-                                Cancel
-                            </button>
-                            <button class="ui primary right floated button submit_button">
-                                Share
-                            </button>
-                        </div>
+        <div class="hidden field placeholder">
+            <div class="field">
+                <label for="">E-mail</label>
+                <div class="ui fluid dropdown labeled icon button">
+                    <i class=""></i>
+                    <span class="text">Choose...</span>
+                    <div class="menu">
                     </div>
                 </div>
             </div>
-
-
-        </div>
-        <div class="ui bottom attached tab segment" data-tab="third">
-            Identity of
-            <strong> CatLover99 </strong>
-
-
-            <div class="ui one column centered grid">
-                <div class="column">
-                    <div class="ui form requests_form">
-                        <div class="field">
-                            <button class="ui left floated basic button cancel_button">
-                                Cancel
-                            </button>
-                            <button class="ui primary right floated button submit_button">
-                                Share
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
         </div>
 
-
-    </div>
-    </div>
-
-    <div class="hidden field placeholder">
-        <div class="field">
-            <label for="">E-mail</label>
-            <div class="ui fluid dropdown labeled icon button">
-                <i class=""></i>
-                <span class="text">Choose...</span>
-                <div class="menu">
-                </div>
-            </div>
-        </div>
-    </div>
-
-  </body>
+    </body>
 </html>
