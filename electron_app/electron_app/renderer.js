@@ -50,11 +50,9 @@ function handleArguments() {
 function createTabs(listUsers, request_json) {
     $('#user_accounts').html("");
     $(listUsers).each(function(i, u) {
-        console.log(u, i);
         var new_object = $("<a/>")
-            .text(u.getName())
+            .text(u.getName()).attr("data-tab", "tab" + i)
             .addClass(i == 0 ? "item active specialtabs" : "item specialtabs")
-            .attr("data-tab", "tab" + i)
             .click(function() {
                 $(".specialtabs").removeClass("active");
                 $(this).addClass("active");
@@ -141,20 +139,20 @@ function renderNewFormElement(request, current_user) {
         .then(items => renderPicker(items, request.type, request));
 
 }
+function emptyRow(optional, field){
+    let empty_row = $("<div class='item' data-value='-1'>Don't select anything</div>")
+    empty_row.data('optional', optional)
+    $(".menu", field).append(empty_row);
+}
 
 function renderPicker(items, type, request) {
 
-    let trusted = request.validated_by.map(a => a.site);
     var field = $(".hidden.field.placeholder").clone();
-    field.removeClass("placeholder");
-    let optional = request.optional ? " (optional)" : "";
-    $("label", field).html(type + optional);
+    field.removeClass("placeholder").addClass("custom_object");
+    $("label", field).html(type + (request.optional ? " (optional)" : ""));
     $("i", field).addClass(requestIconClass(type));
-    let empty_row = $("<div class='item' data-value='-1'>Don't select anything</div>")
-    empty_row.data('optional', request.optional)
-    $(".menu", field).append(empty_row);
-    renderItemsInPicker(field, items, trusted,request.optional)
-    field.addClass("custom_object");
+    emptyRow(request.optional, field)
+    renderItemsInPicker(field, items, request,request.optional)
     $(".requests_form").prepend(field);
     $(".ui.tabular.menu .item").tab();
     $(".ui.dropdown").dropdown({
@@ -163,11 +161,11 @@ function renderPicker(items, type, request) {
             console.log("testst")
             validateForm();
         }
-
     });
 }
 
-function renderItemsInPicker(field, items, trusted, optional) {
+function renderItemsInPicker(field, items, request, optional) {
+    let trusted = request.validated_by.map(a => a.site);
     items.forEach(function(datasnippet, index) {
         let validated = trusted.indexOf(datasnippet.verifier_label) >= 0;
         let icon = validated ? "<i class='checkmark icon'></i>" : "<i class='warning sign icon'></i>";
