@@ -88,9 +88,9 @@ function parseEpicAuthRequestURI(raw_uri){
 }
 
 function renderRequestJSON(request_json, current_user){
-    console.log(current_user);
+    console.log(current_user.getName());
     // $(".form_elements").html("")
-    $('#name_user').text(current_user.getName());
+    $('#identity').html(current_user.getName());
     $('.custom_object').remove();
     $('.request_explanation').html(request_json.explanation);
     $('.service_name').html(request_json.title);
@@ -103,15 +103,20 @@ function renderRequestJSON(request_json, current_user){
 
 function fillInSingleRequest(request, current_user){
     let type = request.type
+    let trusted = request.validated_by.map(a => a.site)
+    console.log(trusted)
     current_user.getItemsFilteredBy(type)
     .then(items =>{
         // TODO: Check if I have this request thingy.
         var field = $(".hidden.field.placeholder").clone();
         field.removeClass("placeholder");
-        $("label", field).html(type);
+        let optional = request.optional ? " (optional)" : ""
+        $("label", field).html(type + optional);
         $("i", field).addClass(requestIconClass(type));
         items.forEach(function(datasnippet){
-            $(".menu", field).append("<div class='item' value='" + datasnippet.data + "'>" + datasnippet.data  +" (" + datasnippet.verifier_label  +")</div>");
+            let validated = trusted.indexOf(datasnippet.verifier_label) >= 0;
+            let icon = validated ? "<i class='checkmark icon'></i>" : "<i class='warning sign icon'></i>"
+            $(".menu", field).append("<div class='item' value='" + datasnippet.data + "'>" + icon + datasnippet.data  +" (" + datasnippet.verifier_label  +")</div>");
         });
         field.addClass("custom_object")
         $(".requests_form").prepend(field);

@@ -114,7 +114,7 @@ class EpicAuthFactory {
                     "data": "test@epicauth.org",
                     "revocation_ref": veri1.address,
                     "verifier_id": verification_account,
-                    "verifier_label": "google.nl",
+                    "verifier_label": "github.com",
                     "verifier_signature": "AFEA234253235"
                 }, {
                     "key": "phone",
@@ -156,7 +156,7 @@ class EpicAuthFactory {
                     "data": "+312141516",
                     "revocation_ref": veri2.address,
                     "verifier_id": verification_account,
-                    "verifier_label": "digid.nl",
+                    "verifier_label": "twitter.com",
                     "verifier_signature": "AFEA234253235"
                 },
                 ]
@@ -189,7 +189,7 @@ class EpicAuthFactory {
                     "data": "test2@epicauth.org",
                     "revocation_ref": veri3.address,
                     "verifier_id": verification_account,
-                    "verifier_label": "github.com",
+                    "verifier_label": "bitbucket.com",
                     "verifier_signature": "AFEA234253235"
                 }, {
                     "key": "phone",
