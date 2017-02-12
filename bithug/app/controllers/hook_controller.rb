@@ -15,7 +15,7 @@ class HookController < ApplicationController
   end
 
   def check_demand_response
-    snippets = create_snippets(params[:response])
+    snippets = create_snippets(JSON.parse(params[:response]).with_indifferent_access)
     config = EpicAuth::Service::Config.new
     valid = true
     demand_responses = []
@@ -26,11 +26,11 @@ class HookController < ApplicationController
       demand_responses << demand_response
     end
     config.successful_response_callback
-    render json: { token: EpicAuth::Service::AuthenticationToken.new(params[:response][:user_id]).encrypt}.to_json
+    render json: { token: EpicAuth::Service::AuthenticationToken.new(1).encrypt}.to_json
   end
 
   def create_snippets(response)
-    @snippets = response[:share_data].inject([]) do |snippets, data_snippet|
+    @snippets =response["share_data"].inject([]) do |snippets, data_snippet|
       snippets << EpicAuth::Service::VerifiedDataSnippet.new(
           data_snippet[:key],
           data_snippet[:data],
