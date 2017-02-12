@@ -7,51 +7,7 @@ class IndexController < ApplicationController
   end
 
   def login_redirect_to_app
-    demands = Base64.encode64({
-                                  return_url: "http://localhost:3000/hooks/token/$token",
-                                  intermediate_url: "http://localhost:3000/hooks/check_demand_response/",
-                                  error_url: "http://localhost:3000/error/",
-                                  title: 'Login to Bithug website',
-                                  explanation: 'You you want to use our service, please allow us to send you spam on your mail and maybe call you on inpropriate times.',
-                                  requests: [
-                                      {
-                                          type: "email",
-                                          optional: false,
-                                          validated_by: [
-                                              {
-                                                  site: "epicauth.org",
-                                                  address: 0xDEADBEEF
-                                              },
-                                              {
-                                                  site: "github.com",
-                                                  address: 0xDEADBEEF
-                                              },
-                                              {
-                                                  site: "google.com",
-                                                  address: 0xCAFEBABE
-                                              }
-                                          ]
-                                      },
-                                      {
-                                          type: "phone",
-                                          optional: true,
-                                          validated_by: [
-                                              {
-                                                  site: "github.com",
-                                                  address: 0xDEADCAFE
-                                              },
-                                              {
-                                                  site: "epicauth.org",
-                                                  address: 0xDEADCAFE
-                                              },
-                                              {
-                                                  site: "google.com",
-                                                  address: 0xCAFEBABE
-                                              }
-                                          ]
-                                      }
-                                  ]
-                              }.to_json)
+    demands = Base64.encode64(EpicAuth::Service::Config.standard_demands.to_json)
     redirect_to "epicauth://#{demands}"
   end
 
@@ -63,15 +19,7 @@ class IndexController < ApplicationController
   end
 
   def download_verification
-    response = {
-        key: 'email',
-        subject: 'public_key',
-        data: 'test@epicauth.org',
-        revocation_ref: '123456789',
-        verifier_id: 0xDEADBEEF,
-        verifier_signature: 'AFEA234253235'
-    }
-
+    response = EpicAuth::Service::Config.stub_verification
     render json: EpicAuth::Service::VerifiedDataSnippet.new(
         response[:key],
         response[:data],

@@ -14,40 +14,11 @@ module EpicAuth
       end
 
       def self.standard_demands
-        {
-            title: 'Login to Bithug website',
-            explanation: 'You you want to use our service, please allow us to send you spam on your mail and maybe call you on inpropriate times.',
-            requests: [
-                {
-                    type: "email",
-                    optional: false,
-                    validated_by: [
-                        {
-                            site: "github.com",
-                            address: 0xDEADBEEF
-                        },
-                        {
-                            site: "google.com",
-                            address: 0xCAFEBABE
-                        }
-                    ]
-                },
-                {
-                    type: "phone",
-                    optional: true,
-                    validated_by: [
-                        {
-                            site: "github.com",
-                            address: 0xDEADCAFE
-                        },
-                        {
-                            site: "google.com",
-                            address: 0xCAFEBABE
-                        }
-                    ]
-                }
-            ]
-        }
+        YAML.load_file('lib/epic_auth_service/standard_demands.yaml')
+      end
+
+      def self.stub_verification
+        YAML.load_file('lib/epic_auth_service/stub_verification.yaml')
       end
 
       def self.standard_response
