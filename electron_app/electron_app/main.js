@@ -15,17 +15,17 @@ let mainWindow;
 function createWindow () {
     global.sharedObject = {encoded_token: process.argv };
     // Create the browser window.
-    mainWindow = new BrowserWindow({width: 400, height: 700});
-    
+    mainWindow = new BrowserWindow({width: 900, height: 700});
+
     // and load the index.html of the app.
     mainWindow.loadURL(url.format({
         pathname: path.join(__dirname, 'index.html'),
         protocol: 'file:',
         slashes: true
     }));
-    
+
     // Open the DevTools.
-    // mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
 
     mainWindow.setMenu(null);
 
