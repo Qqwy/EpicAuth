@@ -82,18 +82,18 @@ function createHandleSubmitButton(request_json) {
         let value_indexes = $('.requests_form .dropdown').dropdown("get item")
         let json_objects = value_indexes.map(datasnippet => $(datasnippet).data('json_object'))
         let post_data = {
-            postdata: JSON.stringify(json_objects)
+            response: JSON.stringify({share_data:json_objects})
         };
-        pushDataToServer(post_data)
+        pushDataToServer(post_data, request_json)
     });
 }
 
-function pushDataToServer() {
+function pushDataToServer(post_data, request_json) {
     $.post(request_json.intermediate_url, post_data, function(postResult) {
         handleStorageOfToken(postResult.token);
         submitRequestResponse(request_json.return_url, postResult.token);
         window.close();
-    });
+    })
 }
 
 
@@ -150,8 +150,10 @@ function renderPicker(items, type, request) {
     let optional = request.optional ? " (optional)" : "";
     $("label", field).html(type + optional);
     $("i", field).addClass(requestIconClass(type));
-    $(".menu", field).append("<div class='item' data-value='-1'>Don't select anything</div>");
-    renderItemsInPicker(field, items, trusted)
+    let empty_row = $("<div class='item' data-value='-1'>Don't select anything</div>")
+    empty_row.data('optional', request.optional)
+    $(".menu", field).append(empty_row);
+    renderItemsInPicker(field, items, trusted,request.optional)
     field.addClass("custom_object");
     $(".requests_form").prepend(field);
     $(".ui.tabular.menu .item").tab();
@@ -165,11 +167,12 @@ function renderPicker(items, type, request) {
     });
 }
 
-function renderItemsInPicker(field, items, trusted) {
+function renderItemsInPicker(field, items, trusted, optional) {
     items.forEach(function(datasnippet, index) {
         let validated = trusted.indexOf(datasnippet.verifier_label) >= 0;
         let icon = validated ? "<i class='checkmark icon'></i>" : "<i class='warning sign icon'></i>";
         let object = $("<div class='item' data-value='" + index + "'>" + icon + datasnippet.data + " (" + datasnippet.verifier_label + ")</div>")
+        object.data('optional', optional)
         object.data('valid', validated)
         object.data('json_object', datasnippet)
         $(".menu", field).append(object);
@@ -181,11 +184,13 @@ function validateForm() {
     console.log(value_indexes)
     let json_objects = value_indexes.map(datasnippet => $(datasnippet).data('json_object'))
 
-    let is_valid = value_indexes
-        .map(datasnippet => $(datasnippet).data('valid'))
-        .every(a => a == true)
-    console.log(json_objects)
-    console.log(is_valid)
+    let valid_indexes = value_indexes
+        .map(datasnippet => [$(datasnippet).data('valid'), $(datasnippet).data('optional'), $(datasnippet).attr('data-value')])
+
+    let is_valid = valid_indexes.every(([valid, optional, value]) => {
+        return valid == true || (optional == true && value == "-1")
+    })
+
     if (is_valid) {
         $('.submit_button').prop("disabled", false);
     } else {

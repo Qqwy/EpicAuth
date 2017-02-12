@@ -88,9 +88,10 @@ class EpicAuthFactory {
         return [
             ["email", "test1@epicauth.org", "ing.nl"],
             ["email", "gunter@gmail.com", "gmail.com"],
-            ["email", "gunter@gmail.com", "google.com"],
+            ["email", "jonsnow@google.com", "google.com"],
             ["email", "bernard@dutchchain.com", "epicauth.org"],
             ["phone", "+311234567", "telfort.nl"],
+            ["phone", "+311234567", "github.com"],
             ["phone", "+123456789", "digid.nl"],
             ["phone", "+133333337", "epicauth.org"],
         ];
