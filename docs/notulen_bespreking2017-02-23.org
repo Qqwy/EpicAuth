@@ -1,0 +1,12 @@
+* PVA EpicAuth
+** Poberen binnen de maand Maart een publiceerbaar Open-Source project van de grond te krijgen.
+* Wat komt in de MVP
+** TODO Djurre + Wiebe-Marten
+* Coding style Infrastructuur beslissen.
+** TODO Ruben
+* Look&Feel, Marketing, Interface voor huidige website
+** TODO Schelte, mensen van DBK
+* Side notes
+** "Vies goed in inloggen"
+** Vergelijken met SAML, OAuth.
+** Peter Steenbergen benaderen?
